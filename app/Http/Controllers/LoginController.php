@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
+    public function showLoginForm(){
+        return view('login');
+    }
 
     public function login(Request $request){
         $request->validate([
@@ -26,7 +29,9 @@ class LoginController extends Controller
         ]);
     }
 
-    public function showLoginForm(){
-        return view('login');
+    public function logout(){
+        Auth::logout();
+
+        return redirect()->intended('/login');
     }
 }

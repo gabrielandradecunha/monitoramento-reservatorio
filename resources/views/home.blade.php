@@ -46,7 +46,7 @@
             }
         </style>
 <div class="container1">
-    <button><a href="/showlogin">Login</a></button> |<button><a href="/">Mais informações</a></button>
+    <button><a href="/login">Login</a></button> |<button><a href="/">Mais informações</a></button>
     <br><br><br><br><br><br><br><br>
     <center><h1>SISTEMA DE MONITORAMENTO DE RESERVATORIO D'AGUA</h1></center>
 </div>

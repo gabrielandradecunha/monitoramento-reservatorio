@@ -57,7 +57,8 @@
     }
 
     .botao:hover {
-        background-color: #4a4af2;
+        background: #fff;
+        color: #5E5DF0;
     }
 
     .form-container a {
@@ -72,7 +73,7 @@
 
 <div class="form-container">
     <h2>Login</h2>
-    <form action="/loginpost" method="post">
+    <form action="/login" method="post">
         @csrf
         <input type="text" name="email" placeholder="Digite seu e-mail" required><br><br>
         <input type="password" name="password" placeholder="Digite sua senha" required><br><br>
