@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 
+use App\Models\Reservatorio;
+
 class DashboardController extends Controller
 {
     public function showDashboard(){
-        $usuarios = User::all();
-        return view('dashboard', compact('usuarios'));
+        $reservatorios = Reservatorio::all();
+        return view('dashboard', compact('reservatorios'));
     }
 }
