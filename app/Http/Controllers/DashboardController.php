@@ -12,4 +12,11 @@ class DashboardController extends Controller
         $reservatorios = Reservatorio::all();
         return view('dashboard', compact('reservatorios'));
     }
+
+    public function showReservatorio(Request $request){
+
+        $nome = $request->nome;
+
+        return view('reservatorio', compact('nome'));
+    }
 }

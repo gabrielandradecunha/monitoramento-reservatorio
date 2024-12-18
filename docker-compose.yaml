@@ -1,3 +1,4 @@
+#Container de banco de dados caso optar por nao usar o sail
 services:
   postgres:
     image: postgres:15

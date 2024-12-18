@@ -21,3 +21,5 @@ Route::get('/dashboard', [DashboardController::class, 'showDashboard'])->middlew
 Route::get('/users', [UserController::class, 'getUsers'])->middleware('auth', AdminMiddleware::class);
 Route::get('/deleteuser/{id}', [UserController::class, 'destroy'])->middleware('auth', AdminMiddleware::class);
 Route::post('/createuser', [UserController::class, 'create'])->middleware('auth', AdminMiddleware::class);
+
+Route::get('/reservatorio/{id}', [DashboardController::class, 'showReservatorio'])->middleware('auth', AdminMiddleware::class);
