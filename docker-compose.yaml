@@ -12,18 +12,18 @@ services:
       - postgres_data:/var/lib/postgresql/data
     networks:
       - monit
-  monitoramento-reservatorio:
-    container_name: monitoramento-reservatorio
-    build:
-      context: .
-      dockerfile: Dockerfile
-    networks:
-      - monit
-    ports:
-      - "8000:8000"
-    restart: always
-    depends_on:
-      - postgres
+  # monitoramento-reservatorio:
+  #   container_name: monitoramento-reservatorio
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   networks:
+  #     - monit
+  #   ports:
+  #     - "8000:8000"
+  #   restart: always
+  #   depends_on:
+  #     - postgres
 
 volumes:
   postgres_data:
