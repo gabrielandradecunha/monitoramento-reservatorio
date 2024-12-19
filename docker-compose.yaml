@@ -1,5 +1,14 @@
-#Container de banco de dados caso optar por nao usar o sail
 services:
+  monitoramento-reservatorio:
+    container_name: monitoramento-reservatorio
+    build:
+      context: .
+      dockerfile: Dockerfile
+    networks:
+      - monit
+    restart: always
+    depends_on:
+      - postgres
   postgres:
     image: postgres:15
     container_name: postgres_monit
