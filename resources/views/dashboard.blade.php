@@ -117,7 +117,7 @@
                     <div class="graficos" id="div-{{$reservatorio->id}}">
                         <center>
                             <canvas id='{{ $reservatorio->id }}'></canvas>
-                            <button class="btn btn-primary"><a href="/reservatorio/{{$reservatorio}}" style="color: white; text-decoration:none;">Mais informações</a></button>
+                            <button class="btn btn-primary"><a href="/reservatorio/{{$reservatorio->id}}" style="color: white; text-decoration:none;">Mais informações</a></button>
                         </center>
                     </div>
                     <script>

@@ -8,9 +8,12 @@ WORKDIR /var/www/html/
 
 COPY . .
 
+# COPY wait-for-it.sh /usr/local/bin/wait-for-postgres.sh
+# RUN chmod +x /usr/local/bin/wait-for-postgres.sh
+
 RUN composer install
-RUN php artisan migrate
+#RUN php artisan migrate
 
 EXPOSE 8000
 
-CMD ["php","artisan","serve"]
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
