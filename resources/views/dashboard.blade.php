@@ -3,106 +3,11 @@
 @section('title', 'Dashboard')
 
 @section('content')
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, Helvetica, sans-serif;
-        }
 
-        body {
-            background-color: rgb(240, 240, 240);
-            display: flex;
-            min-height: 100vh;
-        }
+    {{-- Incluindo css --}}
+    <link rel="stylesheet" href="{{ URL::asset('css/dashboard.css')}} ">
 
-        .sidebar {
-            padding: 0.5%;
-            background-color: white;
-            height: 100vh;
-            width: 4%;
-            /* Largura fixa da sidebar */
-            position: fixed;
-            box-shadow: 4px 0 8px rgba(0, 0, 0, 0.2);
-            /* Sombra */
-            top: 0;
-            left: 0;
-            display: flex;
-            flex-direction: column;
-            /* Organiza os itens em uma coluna */
-            justify-content: flex-start;
-            /* Garante que os links fiquem no topo */
-            overflow-y: auto;
-            /* Adiciona rolagem se necessário */
-        }
-
-        .sidebar a {
-            text-decoration: none;
-            color: #5E69FF;
-            margin-bottom: 10px;
-            display: block;
-            white-space: nowrap;
-        }
-
-        .reservatorios-container {
-            margin-left: 4%;
-            width: 100%;
-            height: 100vh;
-            /*display: flex;*/
-            flex-direction: column;
-            padding: 1%;
-        }
-
-        .reservatorios-box {
-            padding: 3%;
-            background-color: white;
-            box-shadow: 4px 0 8px rgba(0, 0, 0, 0.2);
-            display: inline-block;
-            height: 100%;
-            width: 100%;
-            overflow: auto;
-            display: inline-block;
-        }
-
-        .graficos {
-            width: 20%;
-        }
-
-        .barra {
-            width: 60%;
-        }
-
-        .botaobox {
-            right: 0%;
-        }
-
-        @media (max-width: 768px) {
-            .sidebar {
-                width: 10%;
-            }
-
-            . .reservatorios-container {
-                margin-left: 10%;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .sidebar {
-                width: 15%;
-            }
-
-            .reservatorios-container {
-                margin-left: 15%;
-            }
-
-            .btn-primary {
-                width: 10%;
-            }
-        }
-    </style>
-
-    {{-- Boostratp --}}
+    {{-- Bootstrap --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
@@ -120,8 +25,10 @@
     @include('includes.sidebar')
 
     <div class="reservatorios-container">
+
         <div class="reservatorios-box">
             <h1>Reservatórios de {{ Auth::user()->name }}</h1>
+
             <div class="botaobox d-flex justify-content-end align-items-center">
                 <button class="btn btn-primary">Novo reservatorio</button>
             </div>
@@ -131,11 +38,9 @@
             <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
             {{-- Reservatorios do usuario --}}
-            {{-- @php
-                dd($reservatorios);
-            @endphp --}}
-            <center>
-            <div id="div-graficos" style="display: flex;">
+
+            <div id="div-graficos" style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap;">
+
                 @foreach ($reservatorios as $reservatorio)
                     @if (Auth::user()->id == $reservatorio->user_id)
                         <div class="graficos" id="div-{{ $reservatorio->id }}">
@@ -183,15 +88,19 @@
                     @endif
                 @endforeach
             </div>
-        </center>
             <br>
             <br>
             <hr>
             <br>
 
-            <div class="barra">
-                <canvas id="barra"></canvas>
-            </div>
+
+
+            {{-- Grafico de barra --}}
+            <center>
+                <div class="barra">
+                    <canvas id="barra"></canvas>
+                </div>
+            </center>
 
             <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -202,7 +111,7 @@
                     type: 'bar',
                     data: {
                         labels: [
-                            //Codigo blade para graficos
+                            //Codigo blade para pegar os graficos do banco
                             @foreach ($reservatorios as $reservatorio)
                                 '{{ $reservatorio->nome }}',
                             @endforeach
