@@ -42,7 +42,7 @@
             .container1{
                 height: 100vh;
                 width: 100%;
-                background-image: url('https://www.ecospeed.co.uk/wp-content/uploads/2020/09/Dovestone-Reservoir.jpg');
+                background-image: url('{{URL::asset('imgs/background.jpg')}}');
             }
         </style>
 <div class="container1">

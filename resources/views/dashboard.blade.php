@@ -5,33 +5,18 @@
 @section('content')
 
     {{-- Incluindo css --}}
-    <link rel="stylesheet" href="{{ URL::asset('css/dashboard.css')}} ">
-
-    {{-- Bootstrap --}}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
-        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"
-        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
-    </script>
+    <link rel="stylesheet" href="{{ URL::asset('css/reservatorio.css') }} ">
 
     {{-- Incluindo sidebar --}}
-
     @include('includes.sidebar')
 
     <div class="reservatorios-container">
 
         <div class="reservatorios-box">
-            <h1>Reservatórios de {{ Auth::user()->name }}</h1>
+            <h1>Reservatórios de <i>{{ Auth::user()->name }}</i></h1>
 
-            <div class="botaobox d-flex justify-content-end align-items-center">
-                <button class="btn btn-primary">Novo reservatorio</button>
-            </div>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Novo
+                Reservatório</button><br><br>
             <hr>
 
             {{-- Importando biblioteca de graficos --}}
@@ -46,8 +31,9 @@
                         <div class="graficos" id="div-{{ $reservatorio->id }}">
                             <center>
                                 <canvas id='{{ $reservatorio->id }}'></canvas>
-                                <button class="btn btn-primary"><a href="/reservatorio/{{ $reservatorio->id }}"
-                                        style="color: white; text-decoration:none;">Mais informações</a></button>
+                                <a href="/reservatorio/{{ $reservatorio->id }}">
+                                    <button type="button" class="btn btn-primary">Mais</button>
+                                </a>
                             </center>
                         </div>
                         <script>
@@ -88,8 +74,7 @@
                     @endif
                 @endforeach
             </div>
-            <br>
-            <br>
+            <br><br>
             <hr>
             <br>
 
@@ -113,14 +98,18 @@
                         labels: [
                             //Codigo blade para pegar os graficos do banco
                             @foreach ($reservatorios as $reservatorio)
-                                '{{ $reservatorio->nome }}',
+                                @if (Auth::user()->id == $reservatorio->user_id)
+                                    '{{ $reservatorio->nome }}',
+                                @endif
                             @endforeach
                         ],
                         datasets: [{
                             label: 'Armazenamento em relação a outros reservatorios',
                             data: [
                                 @foreach ($reservatorios as $reservatorio)
-                                    '{{ $reservatorio->volume_atual }}',
+                                    @if (Auth::user()->id == $reservatorio->user_id)
+                                        '{{ $reservatorio->volume_atual }}',
+                                    @endif
                                 @endforeach
                             ],
                             borderWidth: 1
@@ -135,6 +124,49 @@
                     }
                 });
             </script>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Novo reservatorio</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="/createreservatorio/{{ Auth()->user()->id }}" method="post">
+                                @csrf
+                                <label for="nome">Nome do Reservatório:</label>
+                                <input type="text" name="nome" id="nome" class="input-text">
+                                @if ($errors->has('nome'))
+                                    <div class="text-danger">{{ $errors->first('nome') }}</div>
+                                @endif
+                                <br><br>
+                                
+                                <label for="volume_maximo">Volume Máximo (Litros):</label>
+                                <input type="number" name="volume_maximo" id="volume_maximo" class="input-text">
+                                @if ($errors->has('volume_maximo'))
+                                    <div class="text-danger">{{ $errors->first('volume_maximo') }}</div>
+                                @endif
+                                <br><br>
+                                
+                                <label for="volume_atual">Volume Atual (Litros):</label>
+                                <input type="number" name="volume_atual" id="volume_atual" class="input-text">
+                                @if ($errors->has('volume_atual'))
+                                    <div class="text-danger">{{ $errors->first('volume_atual') }}</div>
+                                @endif
+                                <br><br>
+                            
+                                <hr>
+                                <input type="submit" class="btn btn-primary" value="Criar">
+                            </form>                            
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </div>
     </div>

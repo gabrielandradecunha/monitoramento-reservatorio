@@ -14,7 +14,7 @@
 
     body, html {
         height: 100%;
-        background-image: url('https://www.ecospeed.co.uk/wp-content/uploads/2020/09/Dovestone-Reservoir.jpg');
+        background-image: url('{{URL::asset('imgs/background.jpg')}}');
         /*background-size: cover;*/
         background-position: center;
         display: flex;
@@ -80,11 +80,10 @@
         <input type="submit" value="Entrar" class="botao">
         @if($errors->any())
             @foreach($errors->all() as $error)
-                <i>{{ $error }}</i>
+                <i style="color: red">{{ $error }}</i>
             @endforeach
         @endif
     </form>
-    <a href="#">Esqueceu a senha?</a>
 </div>
 
 @endsection

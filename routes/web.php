@@ -4,22 +4,56 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
-//Chamando manualmente o middleware de autenticação de usuario
+use App\Http\Controllers\ReservatorioController;
 use App\Http\Middleware\AdminMiddleware;
 
+/*
+|--------------------------------------------------------------------------
+| Public Routes
+|--------------------------------------------------------------------------
+*/
 Route::get('/', function() {
     return view('home');
 });
 
+/*
+|--------------------------------------------------------------------------
+| Authentication Routes
+|--------------------------------------------------------------------------
+*/
 Route::get('/login', [LoginController::class, 'showLoginForm']);
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout'])->middleware('auth');
 
-Route::get('/dashboard', [DashboardController::class, 'showDashboard'])->middleware('auth');
+/*
+|--------------------------------------------------------------------------
+| Authenticated Routes
+|--------------------------------------------------------------------------
+*/
+Route::middleware('auth')->group(function () {
 
-/* O usuario tera que passar por duas middlewares par acessar essas rotas*/
-Route::get('/users', [UserController::class, 'getUsers'])->middleware('auth', AdminMiddleware::class);
-Route::get('/deleteuser/{id}', [UserController::class, 'destroy'])->middleware('auth', AdminMiddleware::class);
-Route::post('/createuser', [UserController::class, 'create'])->middleware('auth', AdminMiddleware::class);
+    // Dashboard Route
+    Route::get('/dashboard', [DashboardController::class, 'showDashboard']);
+    
+    // Reservatorio Route
+    Route::get('/reservatorio/{id}', [DashboardController::class, 'showReservatorio']);
 
-Route::get('/reservatorio/{id}', [DashboardController::class, 'showReservatorio'])->middleware('auth', AdminMiddleware::class);
+    //Create Reservatorio Route
+    Route::post('/createreservatorio/{id}', [DashboardController::class, 'createReservatorio']);
+
+    //Delete Reservatorio Route
+    Route::delete('/deletarreservatorio/{id}', [ReservatorioController::class, 'destroy']);
+
+    /*
+    |--------------------------------------------------------------------------
+    | Admin Routes
+    |--------------------------------------------------------------------------
+    */
+    Route::middleware(AdminMiddleware::class)->group(function () {
+
+        // User Management Routes
+        Route::get('/users', [UserController::class, 'getUsers']);
+        Route::get('/deleteuser/{id}', [UserController::class, 'destroy']);
+        Route::post('/createuser', [UserController::class, 'create']);
+    });
+});

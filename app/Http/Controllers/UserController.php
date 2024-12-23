@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Reservatorio;
 use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
@@ -15,27 +16,24 @@ class UserController extends Controller
     public function destroy($id)
     {
         $usuario = User::find($id);
+    
         if ($usuario) {
+            Reservatorio::where('user_id', $usuario->id)->delete();
             $usuario->delete();
-            return redirect('/users')->with('success', 'Usuário excluído com sucesso');
+    
+            return redirect('/users')->with('success', 'Usuário e seus reservatórios excluídos com sucesso');
         }
-
+    
         return redirect('/users')->with('error', 'Usuário não encontrado');
     }
 
     public function create(Request $request){
-        try{
-            $request->validate([
-                'name' => 'required|string|max:255',
-                'email' => 'required|string|email|max:255|unique:users,email',
-                'password' => 'required|string',
-                'is_admin' => 'required|boolean',
-            ]);
-        } catch (ValidationException $exception){
-            return $exception;
-        }
-
-        DB::enableQueryLog();
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email',
+            'password' => 'required|string|min:8',
+            'is_admin' => 'required|boolean',
+        ]);
 
         $usuario = new User();
         $usuario->name = $request->name;
@@ -44,9 +42,6 @@ class UserController extends Controller
         $usuario->is_admin = $request->is_admin ?? 0;
         $usuario->save();
 
-        $queries = DB::getQueryLog();
-
         return redirect('/users')->with('success', 'Usuário criado com sucesso');
     }
-
 }

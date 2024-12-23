@@ -15,17 +15,24 @@ body {
     padding: 1%;
     background-color: white;
     height: 100vh;
-    width: auto; /* Ajusta automaticamente ao conteúdo */
+    width: auto;
+    /* Ajusta automaticamente ao conteúdo */
     position: fixed;
-    box-shadow: 4px 0 8px rgba(0, 0, 0, 0.2); /* Sombra */
+    box-shadow: 4px 0 8px rgba(0, 0, 0, 0.2);
+    /* Sombra */
     top: 0;
     left: 0;
     display: flex;
-    flex-direction: column; /* Organiza os itens em uma coluna */
-    justify-content: flex-start; /* Garante que os links fiquem no topo */
-    overflow-y: auto; /* Adiciona rolagem se necessário */
-    overflow-x: hidden; /* Evita rolagem horizontal indesejada */
-    white-space: nowrap; /* Evita quebras de linha nos links */
+    flex-direction: column;
+    /* Organiza os itens em uma coluna */
+    justify-content: flex-start;
+    /* Garante que os links fiquem no topo */
+    overflow-y: auto;
+    /* Adiciona rolagem se necessário */
+    overflow-x: hidden;
+    /* Evita rolagem horizontal indesejada */
+    white-space: nowrap;
+    /* Evita quebras de linha nos links */
 }
 
 .sidebar a {
@@ -33,7 +40,8 @@ body {
     color: #5E69FF;
     margin-bottom: 10px;
     display: block;
-    white-space: nowrap; /* Garante que os textos não quebrem */
+    white-space: nowrap;
+    /* Garante que os textos não quebrem */
 }
 
 
@@ -89,8 +97,6 @@ body {
     }
 }
 
-.input-text{
+.input-text {
     width: 100%;
 }
-
-
