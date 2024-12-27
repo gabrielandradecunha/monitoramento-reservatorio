@@ -5,6 +5,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ReservatorioController;
+use App\Http\Controllers\PerfilController;
 use App\Http\Middleware\AdminMiddleware;
 
 /*
@@ -23,7 +24,7 @@ Route::get('/', function() {
 */
 Route::get('/login', [LoginController::class, 'showLoginForm']);
 Route::post('/login', [LoginController::class, 'login']);
-Route::post('/logout', [LoginController::class, 'logout'])->middleware('auth');
+Route::get('/logout', [LoginController::class, 'logout'])->middleware('auth');
 
 /*
 |--------------------------------------------------------------------------
@@ -43,6 +44,12 @@ Route::middleware('auth')->group(function () {
 
     //Delete Reservatorio Route
     Route::delete('/deletarreservatorio/{id}', [ReservatorioController::class, 'destroy']);
+
+    //Perfil Route
+    Route::get('/perfil/{id}', [PerfilController::class, 'showPerfil'])->name('perfil');
+
+    //Update Perfil Route
+    Route::put('/editarperfil/{id}', [PerfilController::class, 'update']);
 
     /*
     |--------------------------------------------------------------------------

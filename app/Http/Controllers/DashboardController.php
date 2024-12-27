@@ -9,14 +9,12 @@ use Carbon\Carbon;
 class DashboardController extends Controller
 {
     public function showDashboard(){
-
         $reservatorios = Reservatorio::all();
         return view('dashboard', compact('reservatorios'));
 
     }
 
     public function showReservatorio(Request $request){
-
         $id = $request->id;
         $reservatorio = Reservatorio::find($id);
 
