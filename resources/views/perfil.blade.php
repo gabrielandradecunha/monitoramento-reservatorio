@@ -45,42 +45,61 @@
                         </tr>
                     </tbody>
                 </table>
-            </div><br><hr><br>
-            <h3>Reservatorios de <i>{{ Auth::user()->name }}</i></h3>
-            <div class="table-responsive">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th scope="col">Nome</th>
-                            <th scope="col">Volume Atual</th>
-                            <th scope="col">Volume Maximo</th>
-                            <th scope="col">Criado em</th>
-                            <th scope="">Deletar</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($reservatorios as $reservatorio)
-                            @if (Auth::user()->id == $reservatorio->user_id)
-                                <tr>
-                                    <td>{{ $reservatorio->nome }}</td>
-                                    <td>{{ $reservatorio->volume_atual }}</td>
-                                    <td>{{ $reservatorio->volume_maximo }}</td>
-                                    <td>{{ $reservatorio->created_at->format('d/m/Y H:i') }}</td>
-                                    <td>
-                                        <form action="/deletarreservatorio/{{ $reservatorio->id }}" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger">
-                                                Deletar</button>
-                                    </td>
-                                    </form>
-                                    </td>
-                                </tr>
-                            @endif
-                        @endforeach
-                    </tbody>
-                </table>
             </div>
+            @php
+
+                $reservatorioCount = 0;
+
+            @endphp
+            @foreach ($reservatorios as $reservatorio)
+                @if (Auth::user()->id == $reservatorio->user_id)
+                    @php
+                        $reservatorioCount++;
+                    @endphp
+                @endif
+            @endforeach
+
+            @if ($reservatorioCount <= 0)
+                {{-- Vazio pois o usuario não possui reservatorios --}}
+            @else
+                <br>
+                <hr><br>
+                <h3>Reservatorios de <i>{{ Auth::user()->name }}</i></h3>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col">Nome</th>
+                                <th scope="col">Volume Atual</th>
+                                <th scope="col">Volume Maximo</th>
+                                <th scope="col">Criado em</th>
+                                <th scope="">Deletar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($reservatorios as $reservatorio)
+                                @if (Auth::user()->id == $reservatorio->user_id)
+                                    <tr>
+                                        <td>{{ $reservatorio->nome }}</td>
+                                        <td>{{ $reservatorio->volume_atual }}</td>
+                                        <td>{{ $reservatorio->volume_maximo }}</td>
+                                        <td>{{ $reservatorio->created_at->format('d/m/Y H:i') }}</td>
+                                        <td>
+                                            <form action="/deletarreservatorio/{{ $reservatorio->id }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger">
+                                                    Deletar</button>
+                                        </td>
+                                        </form>
+                                        </td>
+                                    </tr>
+                                @endif
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            @endif
 
             <!-- Modal -->
             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -98,21 +117,23 @@
                                 @method('PUT')
                                 @csrf
                                 <label for="nome">Nome:</label>
-                                <input type="text" name="name" id="nome" class="input-text" value="{{ Auth::user()->name }}">
+                                <input type="text" name="name" id="nome" class="input-text"
+                                    value="{{ Auth::user()->name }}">
                                 @if ($errors->has('name'))
                                     <div class="text-danger">{{ $errors->first('nome') }}</div>
                                 @endif
                                 <br><br>
                                 <label for="volume_maximo">Email:</label>
-                                <input type="email" name="email" id="email" class="input-text" value="{{ Auth::user()->email }}">
+                                <input type="email" name="email" id="email" class="input-text"
+                                    value="{{ Auth::user()->email }}">
                                 @if ($errors->has('email'))
                                     <div class="text-danger">{{ $errors->first('email') }}</div>
                                 @endif
                                 <br><br>
-                            
+
                                 <hr>
                                 <input type="submit" class="btn btn-primary" value="Salvar">
-                            </form>                            
+                            </form>
                         </div>
                     </div>
                 </div>

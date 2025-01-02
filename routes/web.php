@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ReservatorioController;
 use App\Http\Controllers\PerfilController;
+use App\Http\Controllers\LixeiraController;
 use App\Http\Middleware\AdminMiddleware;
 
 /*
@@ -35,15 +36,25 @@ Route::middleware('auth')->group(function () {
 
     // Dashboard Route
     Route::get('/dashboard', [DashboardController::class, 'showDashboard']);
-    
+
+    //Lixeira Route
+    Route::get('/lixeira', [LixeiraController::class, 'showLixeira']);
+
+
     // Reservatorio Route
-    Route::get('/reservatorio/{id}', [DashboardController::class, 'showReservatorio']);
+    Route::get('/reservatorio/{id}', [ReservatorioController::class, 'showReservatorio']);
 
     //Create Reservatorio Route
     Route::post('/createreservatorio/{id}', [DashboardController::class, 'createReservatorio']);
 
+    //Update Reservatorio Route
+    Route::post('/updatereservatorio/{id}', [ReservatorioController::class, 'update']);
+
     //Delete Reservatorio Route
     Route::delete('/deletarreservatorio/{id}', [ReservatorioController::class, 'destroy']);
+
+
+
 
     //Perfil Route
     Route::get('/perfil/{id}', [PerfilController::class, 'showPerfil'])->name('perfil');

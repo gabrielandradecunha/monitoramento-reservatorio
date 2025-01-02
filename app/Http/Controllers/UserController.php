@@ -10,7 +10,7 @@ class UserController extends Controller
 {
     public function getUsers(){
         $usuarios = User::all();
-        return view('users', compact('usuarios'));
+        return view('admin.users', compact('usuarios'));
     }
 
     public function destroy($id)

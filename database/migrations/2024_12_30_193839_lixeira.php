@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('reservatorios', function (Blueprint $table) {
+        Schema::create('lixeira', function (Blueprint $table) {
             $table->id();  
             $table->string('nome');  
             $table->decimal('volume_maximo', 15, 2);  
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('reservatorios');
+        Schema::dropIfExists('lixeira');
     }
 };
