@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('historico_reservatorios', function (Blueprint $table) {
             $table->id();
+            /* o motivo para o elemento reservatorio_id não ser uma chave
+            estrangeira é para garantir que o historico se mantenha mesmo após
+            a entidade ser movida para a tabela lixeira, e só seja deletado de fato
+            após a entidade ser deletada diretamente na lixeira */
             $table->unsignedBigInteger('reservatorio_id');
             $table->decimal('volume', 15, 2);
             $table->timestamp('data')->useCurrent();

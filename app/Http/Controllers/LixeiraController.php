@@ -33,13 +33,18 @@ class LixeiraController extends Controller
 
     }
 
-    public function deleteLixo(){
+    public function deleteLixo(Request $request){
 
-        $lixeira = Lixeira::find($id);
+        $lixeira = Lixeira::find($request->id);
 
         if ($lixeira) {
             $lixeira->delete();
-            HistoricoReservatorio::find($lixeira->id);
+
+            $historico = HistoricoReservatorio::where('reservatorio_id', '=', $lixeira->id)->get();
+            // para deleter todas as entidades obtidas com a consulta acima
+            $historico->each(function ($item) {
+                $item->delete();
+            });
 
             return redirect('/dashboard')->with('success', 'Reservatório deletado com sucesso');
         }

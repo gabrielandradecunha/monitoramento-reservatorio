@@ -30,7 +30,8 @@
             @endforeach
 
             @if ($lixoCount <= 0)
-            {{-- Vazio pois o usuario não possui lixos --}}
+                <br>
+                <center><i>Você ainda não possui nenhum reservatorio na lixeira</i></center>
             @else
             <br>
             <div class="table-responsive">

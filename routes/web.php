@@ -77,7 +77,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/restaurarlixo/{id}', [LixeiraController::class, 'restaurar']);
 
     //Delete Lixo Route
-    Route::post('/deletarlixo/{id}', [LixeiraController::class, 'deleteLixo']);
+    Route::delete('/deletarlixo/{id}', [LixeiraController::class, 'deleteLixo']);
 
     /* ===================================================================================*/
 
