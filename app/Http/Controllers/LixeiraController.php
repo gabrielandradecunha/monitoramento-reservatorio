@@ -2,11 +2,53 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Lixeira;
+use App\Models\Reservatorio;
+use App\Models\HistoricoReservatorio;
 use Illuminate\Http\Request;
 
 class LixeiraController extends Controller
 {
-    public function showLixeira(){
-        return view('lixeira');
+
+    public function restaurar(Request $request){
+        $lixeira = Lixeira::find($request->id);
+
+        if ($lixeira) {
+            $reservatorio = new Reservatorio();
+            $reservatorio->id = $lixeira->id;
+            $reservatorio->nome = $lixeira->nome;
+            $reservatorio->volume_maximo = $lixeira->volume_maximo;
+            $reservatorio->volume_atual = $lixeira->volume_atual;
+            $reservatorio->user_id = $lixeira->user_id;
+            $reservatorio->descricao = $lixeira->descricao;
+            $reservatorio->ultima_atualizacao = $lixeira->ultima_atualizacao;
+            $reservatorio->save();
+
+            $lixeira->delete();
+
+            return redirect('/dashboard');
+        }
+
+
+
+    }
+
+    public function deleteLixo(){
+
+        $lixeira = Lixeira::find($id);
+
+        if ($lixeira) {
+            $lixeira->delete();
+            HistoricoReservatorio::find($lixeira->id);
+
+            return redirect('/dashboard')->with('success', 'Reservatório deletado com sucesso');
+        }
+    }
+
+    public function showLixeira(Request $request){
+
+        $lixos = Lixeira::where('user_id', '=', $request->id)->get();
+
+        return view('lixeira', compact('lixos'));
     }
 }

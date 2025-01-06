@@ -12,11 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('historico_reservatorios', function (Blueprint $table) {
-            $table->id();  
-            $table->foreignId('reservatorio_id')->constrained()->onDelete('cascade');  
-            $table->decimal('volume', 15, 2);  
-            $table->timestamp('data')->useCurrent();  
-            $table->timestamps();  
+            $table->id();
+            $table->unsignedBigInteger('reservatorio_id');
+            $table->decimal('volume', 15, 2);
+            $table->timestamp('data')->useCurrent();
+            $table->timestamps();
         });
     }
 

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Reservatorio;
 use App\Models\HistoricoReservatorio;
 use App\Models\Lixeira;
-use Carbon\Carbon; 
+use Carbon\Carbon;
 
 class ReservatorioController extends Controller
 {
@@ -35,23 +35,30 @@ class ReservatorioController extends Controller
             $reservatorio->descricao = $request->descricao;
             $reservatorio->ultima_atualizacao = Carbon::now();
             $reservatorio->save();
-    
+
             return redirect('/dashboard')->with('success', 'Reservatório criado com sucesso!');
         }
-        
+
     }
 
     public function destroy($id)
     {
         $reservatorio = Reservatorio::find($id);
+        $lixeira = Lixeira::find($reservatorio->user_id);
 
         if ($reservatorio) {
 
-            $
+            $lixeira = new Lixeira();
+            $lixeira->id = $reservatorio->id;
+            $lixeira->nome = $reservatorio->nome;
+            $lixeira->volume_maximo = $reservatorio->volume_maximo;
+            $lixeira->volume_atual = $reservatorio->volume_atual;
+            $lixeira->user_id = $reservatorio->user_id;
+            $lixeira->descricao = $reservatorio->descricao;
+            $lixeira->ultima_atualizacao = $reservatorio->ultima_atualizacao;
+            $lixeira->save();
 
             $reservatorio->delete();
-            //HistoricoReservatorio::where('reservatorio_id', '=', $id)->delete();
-
             return redirect('/dashboard')->with('success', 'Reservatório deletado com sucesso!');
         }
 

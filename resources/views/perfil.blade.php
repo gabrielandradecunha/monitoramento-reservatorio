@@ -90,7 +90,6 @@
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger">
                                                     Deletar</button>
-                                        </td>
                                         </form>
                                         </td>
                                     </tr>

@@ -34,12 +34,21 @@ Route::get('/logout', [LoginController::class, 'logout'])->middleware('auth');
 */
 Route::middleware('auth')->group(function () {
 
+
+
+
+    /* ================================ Dashboard Routes =================================*/
+
     // Dashboard Route
     Route::get('/dashboard', [DashboardController::class, 'showDashboard']);
 
-    //Lixeira Route
-    Route::get('/lixeira', [LixeiraController::class, 'showLixeira']);
+    /* ===================================================================================*/
 
+
+
+
+
+    /* ================================ Reservatorio Routes =================================*/
 
     // Reservatorio Route
     Route::get('/reservatorio/{id}', [ReservatorioController::class, 'showReservatorio']);
@@ -53,14 +62,41 @@ Route::middleware('auth')->group(function () {
     //Delete Reservatorio Route
     Route::delete('/deletarreservatorio/{id}', [ReservatorioController::class, 'destroy']);
 
+    /* ===================================================================================*/
 
 
+
+
+
+    /* ================================ Lixeira Routes =================================*/
+
+    //Lixeira Route
+    Route::get('/lixeira/{id}', [LixeiraController::class, 'showLixeira']);
+
+    //Restore Route
+    Route::post('/restaurarlixo/{id}', [LixeiraController::class, 'restaurar']);
+
+    //Delete Lixo Route
+    Route::post('/deletarlixo/{id}', [LixeiraController::class, 'deleteLixo']);
+
+    /* ===================================================================================*/
+
+
+
+
+
+    /* ================================ Perfil Routes =================================*/
 
     //Perfil Route
     Route::get('/perfil/{id}', [PerfilController::class, 'showPerfil'])->name('perfil');
 
     //Update Perfil Route
     Route::put('/editarperfil/{id}', [PerfilController::class, 'update']);
+
+    /* ===================================================================================*/
+
+
+
 
     /*
     |--------------------------------------------------------------------------
