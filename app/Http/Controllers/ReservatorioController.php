@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Reservatorio;
 use App\Models\HistoricoReservatorio;
+use App\Models\Lixeira;
 use Carbon\Carbon; 
 
 class ReservatorioController extends Controller
@@ -45,8 +46,12 @@ class ReservatorioController extends Controller
         $reservatorio = Reservatorio::find($id);
 
         if ($reservatorio) {
+
+            $
+
             $reservatorio->delete();
-            HistoricoReservatorio::where('reservatorio_id', '=', $id)->delete();
+            //HistoricoReservatorio::where('reservatorio_id', '=', $id)->delete();
+
             return redirect('/dashboard')->with('success', 'Reservatório deletado com sucesso!');
         }
 
