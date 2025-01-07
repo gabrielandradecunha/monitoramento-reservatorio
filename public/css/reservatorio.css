@@ -101,9 +101,9 @@ body {
     transition: transform 0.3s ease;
 }
 
-.vazao-retencao-box:hover {
+/* .vazao-retencao-box:hover {
     transform: scale(1.05);
-}
+} */
 
 h5 {
     font-size: 16px;
