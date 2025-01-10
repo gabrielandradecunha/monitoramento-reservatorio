@@ -12,7 +12,7 @@ class LixeiraController extends Controller
 
     public function restaurar(Request $request){
         $lixeira = Lixeira::find($request->id);
-
+		
         if ($lixeira) {
             $reservatorio = new Reservatorio();
             $reservatorio->id = $lixeira->id;
@@ -34,7 +34,7 @@ class LixeiraController extends Controller
     }
 
     public function deleteLixo(Request $request){
-
+	
         $lixeira = Lixeira::find($request->id);
 
         if ($lixeira) {
@@ -52,8 +52,7 @@ class LixeiraController extends Controller
 
     public function showLixeira(Request $request){
 
-        $lixos = Lixeira::where('user_id', '=', $request->id)->get();
-
+        $lixos = Lixeira::where('user_id', '=', $request->id)->get();	
         return view('lixeira', compact('lixos'));
     }
 }

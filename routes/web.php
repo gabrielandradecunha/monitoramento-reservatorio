@@ -36,7 +36,6 @@ Route::middleware('auth')->group(function () {
 
 
 
-
     /* ================================ Dashboard Routes =================================*/
 
     // Dashboard Route

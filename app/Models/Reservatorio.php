@@ -7,16 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Reservatorio extends Model 
 {
+    	protected $table = 'reservatorios';
 
-    protected $table = 'reservatorios';
-
-    protected $fillable = [
-        'nome',
-        'volume_maximo',
-        'volume_atual',
-        'ultima_atualizacao',
-        'descricao',
-        'user_id',
-    ];
+    	protected $fillable = [
+        	'nome',
+        	'volume_maximo',
+        	'volume_atual',
+        	'ultima_atualizacao',
+        	'descricao',
+        	'user_id',
+    	];
 
 }
