@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Reservatorio;
 use App\Models\HistoricoReservatorio;
+use PDF;
 use App\Models\Lixeira;
 use Carbon\Carbon;
 
@@ -63,4 +64,16 @@ class ReservatorioController extends Controller
 
         return redirect('/dashboard')->with('error', 'Reservatório não encontrado!');
     }
+
+    public function gerarPDF($id)
+    {
+        $reservatorio = Reservatorio::find($id);
+        $historico_reservatorio = HistoricoReservatorio::where('reservatorio_id', '=', $id)->get();
+    
+        $pdf = PDF::loadView('pdf.reservatorio_pdf', compact('reservatorio', 'historico_reservatorio'));
+    
+        return $pdf->download('relatorio_do_reservatorio.pdf');
+    }
+    
+
 }

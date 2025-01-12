@@ -60,6 +60,9 @@ Route::middleware('auth')->group(function () {
 
     //Delete Reservatorio Route
     Route::delete('/deletarreservatorio/{id}', [ReservatorioController::class, 'destroy']);
+    
+    //Generate PDF Route
+    Route::get('/gerarpdf{id}', [ReservatorioController::class, 'gerarPDF']);
 
     /* ===================================================================================*/
 
