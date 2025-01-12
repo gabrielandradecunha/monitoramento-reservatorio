@@ -1,4 +1,4 @@
--- Função para inserir na tabela historico_reservatorio os valores 
+-- Função para inserir na tabela historico_reservatorio os valores da tabela reservatorios
 CREATE OR REPLACE FUNCTION inserir_historico_reservatorio()
 RETURNS TRIGGER AS $$
 BEGIN

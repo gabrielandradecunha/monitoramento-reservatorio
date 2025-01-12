@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# install full app with this script
+
 git clone https://github.com/andradesysadmin/monitoramento-reservatorio/
 cd monitoramento-reservatorio
 sudo docker-compose up -d

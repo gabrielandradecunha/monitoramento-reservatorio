@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# resumo dos comandos usados para subir a aplicaão
+# summary of commands to setup aplication
 
 sudo docker-compose up -d
 composer install
