@@ -1,6 +1,6 @@
 # Sistema de Monitoramento de Reservatórios d'Água
 
-<img src="imgs/Peek 10-01-2025 02-58.gif">
+<img src="imgs/reservatorio.gif">
 
 Este projeto é um **sistema de monitoramento de reservatórios de água**, desenvolvido com **Laravel**, **Docker** e **PostgreSQL**. O sistema coleta dados de níveis de água em tempo real, enviados por um microcontrolador, e os armazena em um banco de dados. Com base nesses dados, o sistema processa e exibe informações de fácil acesso para o administrador, permitindo o acompanhamento e a gestão eficiente dos reservatórios.
 
