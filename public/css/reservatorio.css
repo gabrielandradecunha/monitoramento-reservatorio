@@ -54,13 +54,6 @@ body {
     overflow: auto;
 }
 
-.graficos {
-    width: 20%;
-}
-
-.barra {
-    width: 60%;
-}
 
 @media (max-width: 768px) {
     .sidebar {
@@ -81,9 +74,7 @@ body {
         margin-left: 15%;
     }
 
-    .btn-primary {
-        width: 10%;
-    }
+    
 }
 
 .input-text {
@@ -122,17 +113,15 @@ h5 {
 
 .vazao-retencao-container {
     display: flex;
-    justify-content: space-between;
     gap: 20px;
     flex-wrap: wrap;
 }
 
 .vazao-retencao-box {
     background-color: #ffffff;
-    padding: 10px;
-    width: 30%;
-    box-sizing: border-box;
+    overflow: hidden;  
 }
+
 
 .vazao-retencao-box h5 {
     margin: 5px 0;

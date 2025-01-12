@@ -69,22 +69,25 @@
                             <form action="/createuser" method="post">
                                 @csrf
                                 <label for="name">Nome:</label>
-                                <input type="text" name="name" id="name" class="input-text" value="{{ old('name') }}"><br><br>
+                                <input type="text" name="name" id="name" class="input-text" value="{{ old('name') }}">
                                 @if ($errors->has('name'))
                                     <div class="text-danger">{{ $errors->first('name') }}</div>
                                 @endif
+                                <br><br>
                                 
                                 <label for="email">Email:</label>
-                                <input type="email" name="email" id="email" class="input-text" value="{{ old('email') }}"><br><br>
+                                <input type="email" name="email" id="email" class="input-text" value="{{ old('email') }}">
                                 @if ($errors->has('email'))
                                     <div class="text-danger">{{ $errors->first('email') }}</div>
                                 @endif
+                                <br><br>
                                 
                                 <label for="password">Senha:</label>
-                                <input type="password" name="password" id="password" class="input-text"><br><br>
+                                <input type="password" name="password" id="password" class="input-text">
                                 @if ($errors->has('password'))
                                     <div class="text-danger">{{ $errors->first('password') }}</div>
                                 @endif
+                                <br><br>
                                 
                                 <hr>
                                 <label for="">Nivel de acesso:</label><br>

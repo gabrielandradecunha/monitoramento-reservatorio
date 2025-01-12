@@ -44,7 +44,6 @@ class ReservatorioController extends Controller
     public function destroy($id)
     {
         $reservatorio = Reservatorio::find($id);
-        $lixeira = Lixeira::find($reservatorio->user_id);
 
         if ($reservatorio) {
 

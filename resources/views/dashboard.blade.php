@@ -5,7 +5,7 @@
 @section('content')
 
     {{-- Incluindo css --}}
-    <link rel="stylesheet" href="{{ URL::asset('css/reservatorio.css') }} ">
+    <link rel="stylesheet" href="{{ URL::asset('css/dashboard.css') }} ">
 
     {{-- Incluindo sidebar --}}
     @include('includes.sidebar')
@@ -13,10 +13,13 @@
     <div class="reservatorios-container">
 
         <div class="reservatorios-box">
-            <h1>Reservatórios de <i>{{ Auth::user()->name }}</i></h1>
+            <p>Reservatórios de <i>{{ Auth::user()->name }}</i></p>
 
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Novo
-                Reservatório</button><br><br>
+                <button class="btn btn-primary d-none d-sm-block" data-toggle="modal" data-target="#exampleModal">Novo
+                    Reservatório</button>
+                <!-- Para telas pequenas -->
+                <button class="btn btn-primary d-block d-sm-none" data-toggle="modal" data-target="#exampleModal">Novo
+                    Reservatório</button>
             <hr>
 
             {{-- Importando biblioteca de graficos --}}
@@ -40,7 +43,7 @@
                 <br>
                 <center><i>Você ainda não possui nenhum reservatório 😥</i></center>
             @else
-                <div id="div-graficos" style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap;">
+                <div id="div-graficos" style="display: flex; justify-content: left; align-items: center; flex-wrap: wrap;">
                     @foreach ($reservatorios as $reservatorio)
                         @if (Auth::user()->id == $reservatorio->user_id)
                             <div class="graficos" id="div-{{ $reservatorio->id }}" style="margin-bottom: 5%;">
@@ -49,7 +52,7 @@
                                     <a href="/reservatorio/{{ $reservatorio->id }}">
                                         <button type="button" class="btn btn-primary">Mais</button>
                                     </a>
-                                </center>
+                                <center>
                             </div>
                             <script>
                                 // Dados do reservatório

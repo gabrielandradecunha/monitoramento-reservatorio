@@ -126,53 +126,56 @@
                 @endphp
             @endforeach
 
-            <div class="vazao-retencao-container">
-                <div class="vazao-retencao-box">
-                    <h5 class="vazao">
-                        Vazão: {{ number_format($vazao, 2, ',', '.') }} litros
-                        <svg xmlns="http://www.w3.org/2000/svg" style="color: red" width="25" height="25"
-                            fill="currentColor" class="bi bi-arrow-down-circle-fill" viewBox="0 0 16 16">
-                            <path
-                                d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293z" />
-                        </svg>
-                    </h5>
-                    <h5 class="retencao">
-                        Retenção: {{ number_format($retencao, 2, ',', '.') }} litros
-                        <svg xmlns="http://www.w3.org/2000/svg" style="color: green" width="25" height="25"
-                            fill="currentColor" class="bi bi-arrow-up-circle-fill" viewBox="0 0 16 16">
-                            <path
-                                d="M16 8A8 8 0 1 0 0 8a8 8 0 0 0 16 0m-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707z" />
-                        </svg>
-                    </h5>
-                </div>
-                <div class="vazao-retencao-box">
-                    <h5>Vazão: {{ number_format($velocidade_vazao, 2, ',', '.') }} l/h</h5>
-                    <h5>Retenção: {{ number_format($velocidade_retencao, 2, ',', '.') }} l/h</h5>
-                </div>
-                <div class="vazao-retencao-box">
-                    @php
-                        $tempo_atualizacao = 'N/A';
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">Vazão
+                                <i style="color: red"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25"
+                                        fill="currentColor" class="bi bi-arrow-down-circle-fill" viewBox="0 0 16 16">
+                                        <path
+                                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293z" />
+                                    </svg></i></th>
+                            <th scope="col">Retenção <i style="color: green"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25"
+                                fill="currentColor" class="bi bi-arrow-up-circle-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M16 8A8 8 0 1 0 0 8a8 8 0 0 0 16 0m-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707z" />
+                            </svg></i></th>
+                            <th scope="col">Velocidade da Vazão</th>
+                            <th scope="col">Velocidade da Retenção</th>
+                            <th scope="col">Taxa de atualização</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{ number_format($vazao, 2, ',', '.') }}</td>
+                            <td>{{ number_format($retencao, 2, ',', '.') }}</td>
+                            <td>{{ number_format($velocidade_vazao, 2, ',', '.') }} l/h</td>
+                            <td>{{ number_format($velocidade_retencao, 2, ',', '.') }} l/h</td>
+                            @php
+                                $tempo_atualizacao = 'N/A';
 
-                        if (count($historico_reservatorio) >= 2) {
-                            // Ordenar o histórico por data em ordem decrescente, se necessário
-                            $historico_ordenado = $historico_reservatorio->sortByDesc('data')->values();
+                                if (count($historico_reservatorio) >= 2) {
+                                    // Ordenar o histórico por data em ordem decrescente, se necessário
+                                    $historico_ordenado = $historico_reservatorio->sortByDesc('data')->values();
 
-                            $ultimo = strtotime($historico_ordenado[0]->data); // Última medição
-                            $penultimo = strtotime($historico_ordenado[1]->data); // Penúltima medição
-                            $diferenca = $ultimo - $penultimo; // Diferença em segundos
+                                    $ultimo = strtotime($historico_ordenado[0]->data); // Última medição
+                                    $penultimo = strtotime($historico_ordenado[1]->data); // Penúltima medição
+                                    $diferenca = $ultimo - $penultimo; // Diferença em segundos
 
-                            if ($diferenca >= 0) {
-                                // Converter diferença para minutos
-                                $tempo_atualizacao = round($diferenca / 60, 2) . ' min';
-                            } else {
-                                $tempo_atualizacao = 'Erro: Datas inválidas';
-                            }
-                        }
-                    @endphp
+                                    if ($diferenca >= 0) {
+                                        // Converter diferença para minutos
+                                        $tempo_atualizacao = round($diferenca / 60, 2) . ' min';
+                                    } else {
+                                        $tempo_atualizacao = 'Erro: Datas inválidas';
+                                    }
+                                }
+                            @endphp
 
-                    <h5>Taxa de atualização: {{ $tempo_atualizacao }}</h5>
-
-                </div>
+                            <td>{{ $tempo_atualizacao }}</td>
+                        </tr>
+                </tbody>
+                </table>
             </div>
 
             <br>
