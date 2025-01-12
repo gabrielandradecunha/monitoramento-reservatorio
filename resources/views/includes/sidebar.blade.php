@@ -20,7 +20,7 @@
             <path fill-rule="evenodd"
                 d="M4.553 7.776c.82-1.641 1.717-2.753 2.093-3.13l.708.708c-.29.29-1.128 1.311-1.907 2.87z" />
         </svg>
-    </a><br><br>
+    </a>
     @if (Auth::user()->is_admin)
         <a href="/users">
             <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"

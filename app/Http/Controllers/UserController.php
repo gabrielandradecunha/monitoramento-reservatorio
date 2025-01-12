@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Reservatorio;
+use App\Models\HistoricoReservatorio;
 use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
@@ -16,16 +17,24 @@ class UserController extends Controller
     public function destroy($id)
     {
         $usuario = User::find($id);
-    
-        if ($usuario) {
-            Reservatorio::where('user_id', $usuario->id)->delete();
-            $usuario->delete();
-    
-            return redirect('/users')->with('success', 'Usuário e seus reservatórios excluídos com sucesso');
+        
+        if (!$usuario) {
+            return redirect('/users')->with('error', 'Usuário não encontrado');
         }
     
-        return redirect('/users')->with('error', 'Usuário não encontrado');
+        $reservatorios = Reservatorio::where('user_id', $usuario->id)->get();
+        
+        foreach ($reservatorios as $reservatorio) {
+            HistoricoReservatorio::where('reservatorio_id', $reservatorio->id)->delete();
+        }
+        
+        $reservatorios->each->delete();
+        
+        $usuario->delete();
+        
+        return redirect('/users')->with('success', 'Usuário e seus reservatórios excluídos com sucesso');
     }
+    
 
     public function create(Request $request){
         $validated = $request->validate([
