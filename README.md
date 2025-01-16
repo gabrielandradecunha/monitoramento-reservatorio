@@ -1,4 +1,4 @@
-# Sistema de Monitoramento de Reservatórios d'Água
+# Monitoramento de Reservatórios d'Água
 
 <img src="imgs/reservatorio.gif">
 
