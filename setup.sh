@@ -3,6 +3,7 @@
 # summary of commands to setup aplication
 
 sudo docker-compose up -d
+mv .env.example .env
 composer install
 php artisan migrate
 php artisan db:seed
