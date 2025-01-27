@@ -20,7 +20,7 @@ O sistema fornece ao administrador os seguintes dados:
 No terminal, clone o repositório e navegue até o diretório do projeto:
 
 ```bash
-git clone https://github.com/andradesysadmin/monitoramento-reservatorio/
+git clone https://github.com/gabrielandradecunha/monitoramento-reservatorio/
 cd monitoramento-reservatorio
 ```
 
