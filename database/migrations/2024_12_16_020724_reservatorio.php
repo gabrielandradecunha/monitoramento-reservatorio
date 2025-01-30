@@ -12,15 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('reservatorios', function (Blueprint $table) {
-            $table->id();  
-            $table->string('nome');  
-            $table->decimal('volume_maximo', 15, 2);  
-            $table->decimal('volume_atual', 15, 2);  
-            $table->timestamp('ultima_atualizacao');  
+            $table->id();
+            $table->string('nome');
+            $table->decimal('volume_maximo', 15, 2);
+            $table->decimal('volume_atual', 15, 2);
+            $table->timestamp('ultima_atualizacao');
             $table->text('descricao')->nullable();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');  
+            $table->text('mac')->nullable();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
 
-            $table->timestamps();  
+            $table->timestamps();
         });
     }
 

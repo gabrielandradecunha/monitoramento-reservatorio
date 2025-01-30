@@ -34,6 +34,7 @@ class ReservatorioController extends Controller
             $reservatorio->volume_maximo = $request->volume_maximo;
             $reservatorio->volume_atual = $request->volume_atual;
             $reservatorio->descricao = $request->descricao;
+            $reservatorio->mac = $request->mac;
             $reservatorio->ultima_atualizacao = Carbon::now();
             $reservatorio->save();
 
@@ -55,6 +56,7 @@ class ReservatorioController extends Controller
             $lixeira->volume_atual = $reservatorio->volume_atual;
             $lixeira->user_id = $reservatorio->user_id;
             $lixeira->descricao = $reservatorio->descricao;
+            $lixeira->mac = $reservatorio->mac;
             $lixeira->ultima_atualizacao = $reservatorio->ultima_atualizacao;
             $lixeira->save();
 
@@ -69,11 +71,11 @@ class ReservatorioController extends Controller
     {
         $reservatorio = Reservatorio::find($id);
         $historico_reservatorio = HistoricoReservatorio::where('reservatorio_id', '=', $id)->get();
-    
+
         $pdf = PDF::loadView('pdf.reservatorio_pdf', compact('reservatorio', 'historico_reservatorio'));
-    
+
         return $pdf->download('relatorio_do_reservatorio.pdf');
     }
-    
+
 
 }

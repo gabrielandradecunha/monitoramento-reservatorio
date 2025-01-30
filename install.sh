@@ -2,7 +2,7 @@
 
 # install full app with this script
 
-git clone https://github.com/andradesysadmin/monitoramento-reservatorio/
+git clone https://github.com/gabrielandradecunha/monitoramento-reservatorio/
 cd monitoramento-reservatorio
 sudo docker-compose up -d
 cp .env.example .env

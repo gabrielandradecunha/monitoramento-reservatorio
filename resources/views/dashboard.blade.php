@@ -176,6 +176,13 @@
                                 @endif
                                 <br><br>
 
+                                <label for="mac">MAC do Microcontrolador:</label>
+                                <input type="text" name="mac" id="mac" class="input-text"/>
+                                @if ($errors->has('mac'))
+                                    <div class="text-danger">{{ $errors->first('mac') }}</div>
+                                @endif
+                                <br><br>
+
                                 <label for="descricao">Descrição:</label>
                                 <textarea name="descricao" id="descricao" class="input-text"></textarea>
                                 @if ($errors->has('descricao'))
