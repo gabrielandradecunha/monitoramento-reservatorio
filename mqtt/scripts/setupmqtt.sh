@@ -2,7 +2,7 @@
 
 # run it before up docker-compose
 
-cd mosquitto/config/
+cd ../mosquitto/config/
 touch pass
 cd ../../../
 
