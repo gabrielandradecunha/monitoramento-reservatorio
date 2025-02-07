@@ -135,7 +135,65 @@ h5 {
     vertical-align: middle;
 }
 
-#map{
+
+
+
+#map {
     width: 100%;
     height: 100%;
+}
+
+.div-grafico{
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.grafico-mapa-container {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.div-grafico,
+.div-mapa {
+    width: 700px;
+    height: 300px;
+}
+
+.div-grafico canvas,
+.div-mapa #map {
+    padding: 2%;
+    width: 100%;
+    height: 100%;
+}
+
+.div-mapa{
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Ajustes para telas menores */
+@media (max-width: 768px) {
+    .div-grafico,
+    .div-mapa {
+        width: 450px; /* Reduz o tamanho das divs em telas menores */
+        height: 150px;
+    }
+
+    .grafico-mapa-container {
+        gap: 5px; /* Reduz o espaço entre as divs */
+    }
+}
+
+@media (max-width: 480px) {
+    .div-grafico,
+    .div-mapa {
+        width: 420px;
+        height: 120px;
+    }
+
+    .grafico-mapa-container {
+        gap: 2px;
+    }
 }

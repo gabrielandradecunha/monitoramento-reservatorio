@@ -28,6 +28,7 @@ class DashboardController extends Controller
             $reservatorio->volume_maximo = $request->volume_maximo;
             $reservatorio->volume_atual = $request->volume_atual;
             $reservatorio->user_id = $request->id;
+            $reservatorio->mac = $request->mac;
             $reservatorio->descricao = $request->descricao;
             $reservatorio->longitude = $request->longitude;
             $reservatorio->latitude = $request->latitude;

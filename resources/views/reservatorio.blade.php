@@ -187,18 +187,18 @@
             {{-- Importando biblioteca de graficos --}}
             <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-            <div class="container">
-                <div class="row">
+            <br>
+            <div class="grafico-mapa-container">
+
                     <!-- Gráfico -->
-                    <div class="col-md-6 d-flex justify-content-center align-items-center">
-                        <canvas id="graficoLinha" class="w-100"></canvas>
+                    <div class="div-grafico">
+                        <canvas id="graficoLinha" class="height: 100%; width: 100%;"></canvas>
                     </div>
 
                     <!-- Mapa -->
-                    <div class="col-md-6">
-                        <div id="map" class="w-100 h-100"></div>
+                    <div class="div-mapa">
+                        <div id="map"></div>
                     </div>
-                </div>
             </div>
 
 
