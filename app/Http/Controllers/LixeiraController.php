@@ -22,6 +22,8 @@ class LixeiraController extends Controller
             $reservatorio->user_id = $lixeira->user_id;
             $reservatorio->descricao = $lixeira->descricao;
             $reservatorio->mac = $lixeira->mac;
+            $reservatorio->longitude = $lixeira->longitude;
+            $reservatorio->latitude = $lixeira->latitude;
             $reservatorio->ultima_atualizacao = $lixeira->ultima_atualizacao;
             $reservatorio->save();
 

@@ -27,6 +27,15 @@ services:
     networks:
       - monit
 
+  geoserver:
+    image: docker.osgeo.org/geoserver:2.26.x
+    container_name: geoserver_monit
+    ports:
+      - "8181:8080"
+    networks:
+      - monit
+    restart: always
+
 volumes:
   postgres_data:
     driver: local

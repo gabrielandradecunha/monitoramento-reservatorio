@@ -6,8 +6,8 @@ router = APIRouter()
 
 # @router.post('/statusmotor')
 # def statusmotor():
-    
+
 
 # @router.post('/ligarmotor')
 # def motor():
-    
+

@@ -9,9 +9,6 @@ from router import router
 
 load_dotenv()
 
-# frontend url for cors
-url_frontend = os.getenv('URL_FRONTEND')
-
 # mosquitto credentials
 user = os.getenv('MOSQUITTO_USER')
 password = os.getenv('MOSQUITTO_PASSWORD')
@@ -20,6 +17,9 @@ mqtt_port = os.getenv('MOSQUITTO_PORT')
 mqtt_topic = os.getenv('MOSQUITTO_TOPIC')
 
 # API
+# frontend url for cors
+url_frontend = os.getenv('URL_FRONTEND')
+
 app = FastAPI()
 
 origins = [
@@ -56,16 +56,17 @@ def on_message(client, userdata, msg):
     json_string = msg.payload
     data = json.loads(json_string)
 
-    print(f"mac: {data['mac']} e volume: {data['volume']}")
+    print(f"mac: {data['MACAddress']}, volume: {data['Nivel_agua']}, longitude: {data['longitude']}, latitude: {data['latitude']}")
 
-    update_db(data['mac'], data['volume'])
+    update_db(data['MACAddress'], data['Nivel_agua'], data['longitude'], data['latitude'])
 
 mqttc = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
 
 # optional tls
 #mqttc.tls_set()
 
-mqttc.username_pw_set(user, password)
+# user and password for priate brokers
+#mqttc.username_pw_set(user, password)
 mqttc.connect(str(mqtt_host), int(mqtt_port), 60)
 
 mqttc.on_connect = on_connect

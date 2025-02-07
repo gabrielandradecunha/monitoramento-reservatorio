@@ -29,15 +29,13 @@ def get_mac():
         mac_list = [mac[0] for mac in macs]
         return mac_list
     except Exception as e:
-        print(f"Error updating the database: {e}")
-        connection.rollback()
+        print(f"Error executing query: {e}")
     finally:
         cursor.close()
         if connection:
             connection.close()
 
-
-def update_db(mac_adress, new_vol):
+def update_db(mac_adress, new_vol, new_lat, new_long):
     dbname = os.getenv('DB_NAME')
     db_user = os.getenv('DB_USER')
     password = os.getenv('DB_PASSWORD')
@@ -54,13 +52,13 @@ def update_db(mac_adress, new_vol):
         return
 
     cursor = connection.cursor()
-    query = "UPDATE reservatorios SET volume_atual=%s WHERE mac=%s"
+    query = "UPDATE reservatorios SET volume_atual=%s, latitude=%s, longitude=%s WHERE mac=%s"
 
     try:
-        cursor.execute(query, (new_vol, mac_adress))
+        cursor.execute(query, (new_vol, new_lat, new_long, mac_adress))
         connection.commit()
         if cursor.rowcount > 0:
-            print(f"Volume atualizado com sucesso para o reservatorio com o mac {mac_adress}. Novo volume: {new_vol}")
+            print(f"Volume atualizado com sucesso para o reservatório com o mac {mac_adress}. Novo volume: {new_vol}")
         else:
             print(f"Nenhum reservatório encontrado com o mac {mac_adress}. Nenhuma atualização realizada.")
     except Exception as e:

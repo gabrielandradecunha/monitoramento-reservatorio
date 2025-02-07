@@ -183,6 +183,22 @@
                                 @endif
                                 <br><br>
 
+                                <label for="latitude">Latitude:</label>
+                                <input type="text" name="latitude" id="latitude" class="input-text"
+                                    value=""/>
+                                @if ($errors->has('mac'))
+                                    <div class="text-danger">{{ $errors->first('mac') }}</div>
+                                @endif
+                                <br><br>
+
+                                <label for="longitude">Longitude:</label>
+                                <input type="text" name="longitude" id="longitude" class="input-text"
+                                    value=""/>
+                                @if ($errors->has('mac'))
+                                    <div class="text-danger">{{ $errors->first('mac') }}</div>
+                                @endif
+                                <br><br>
+
                                 <label for="descricao">Descrição:</label>
                                 <textarea name="descricao" id="descricao" class="input-text"></textarea>
                                 @if ($errors->has('descricao'))
