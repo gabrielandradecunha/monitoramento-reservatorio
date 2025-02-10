@@ -6,18 +6,19 @@
 }
 
 body {
-    background-color: rgb(240, 240, 240);
+    background-color: rgb(30, 30, 30);
     display: flex;
     min-height: 100vh;
+    color: white;
 }
 
 .sidebar {
     padding: 1%;
-    background-color: white;
+    background-color: rgb(50, 50, 50);
     height: 100vh;
     width: auto;
     position: fixed;
-    box-shadow: 4px 0 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 4px 0 8px rgba(0, 0, 0, 0.4);
     top: 0;
     left: 0;
     display: flex;
@@ -30,31 +31,33 @@ body {
 
 .sidebar a {
     text-decoration: none;
-    color: #5E69FF;
+    color: #8A94FF;
     margin-bottom: 10px;
     display: block;
     white-space: nowrap;
 }
 
+.sidebar a:hover {
+    color: #5E69FF;
+}
 
 .reservatorios-container {
+    background-color: rgb(50, 50, 50);
     margin-left: 4%;
     width: 100%;
     height: 100vh;
-    /*display: flex;*/
     flex-direction: column;
     padding: 1%;
 }
 
 .reservatorios-box {
     padding: 3%;
-    background-color: white;
-    box-shadow: 4px 0 8px rgba(0, 0, 0, 0.2);
+    background-color: rgb(40, 40, 40);
+    box-shadow: 4px 0 8px rgba(0, 0, 0, 0.4);
     display: inline-block;
     height: 100%;
     width: 100%;
     overflow: auto;
-    display: inline-block;
 }
 
 .graficos {
@@ -110,18 +113,25 @@ p {
     p {
         font-size: 2rem;
     }
-
-
 }
 
 .input-text{
     width: 100%;
+    background-color: rgb(60, 60, 60);
+    color: white;
+    border: 1px solid rgb(80, 80, 80);
 }
 
-
 .btn-custom {
-    background-color: rgba(94, 105, 255, 0.2);
+    background-color: rgba(94, 105, 255, 0.5);
     color: white;
     border: none;
 }
 
+.btn-custom:hover {
+    background-color: rgba(94, 105, 255, 0.8);
+}
+
+p{
+    color: white;
+}

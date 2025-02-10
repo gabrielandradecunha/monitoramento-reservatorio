@@ -25,7 +25,7 @@ Route::get('/', function() {
 */
 Route::get('/login', [LoginController::class, 'showLoginForm']);
 Route::post('/login', [LoginController::class, 'login']);
-Route::get('/logout', [LoginController::class, 'logout'])->middleware('auth');
+Route::get('/logout', [LoginController::class, 'logout']);
 
 /*
 |--------------------------------------------------------------------------
@@ -60,7 +60,7 @@ Route::middleware('auth')->group(function () {
 
     //Delete Reservatorio Route
     Route::delete('/deletarreservatorio/{id}', [ReservatorioController::class, 'destroy']);
-    
+
     //Generate PDF Route
     Route::get('/gerarpdf{id}', [ReservatorioController::class, 'gerarPDF']);
 

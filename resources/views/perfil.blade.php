@@ -131,7 +131,7 @@
                                 <br><br>
 
                                 <hr>
-                                <input type="submit" class="btn btn-primary" value="Salvar">
+                                <input type="submit" class="btn btn-primary" style="background-color: rgb(94, 105, 255)" value="Salvar">
                             </form>
                         </div>
                     </div>

@@ -11,7 +11,7 @@
         <div class="reservatorios-box">
 
             <div style="display: flex; justify-content: space-between; align-items: center;">
-            
+
                 <center><img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('imgs/logo-if.png'))) }}" alt="Logo" height="20%"></center>
 
             </div>
@@ -60,7 +60,7 @@
                 <p>{{ $reservatorio->descricao }}</p><br>
             @endif
 
-            <h2>Graficos e Métricas</h2>
+            <h2>Dados</h2>
             <hr>
 
             @php

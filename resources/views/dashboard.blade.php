@@ -15,10 +15,11 @@
         <div class="reservatorios-box">
             <p>Reservatórios de <i>{{ Auth::user()->name }}</i></p>
 
-                <button class="btn btn-primary d-none d-sm-block" data-toggle="modal" data-target="#exampleModal">Novo
+                <button class="btn btn-primary d-none d-sm-block" data-toggle="modal" data-target="#exampleModal" style="background-color: rgba(94, 105, 255)">Novo
                     Reservatório</button>
+
                 <!-- Para telas pequenas -->
-                <button class="btn btn-primary d-block d-sm-none" data-toggle="modal" data-target="#exampleModal">Novo
+                <button class="btn btn-primary d-block d-sm-none" data-toggle="modal" data-target="#exampleModal" style="background-color: rgba(94, 105, 255);">Novo
                     Reservatório</button>
             <hr>
 
@@ -50,26 +51,24 @@
                                 <center>
                                     <canvas id='{{ $reservatorio->id }}'></canvas>
                                     <a href="/reservatorio/{{ $reservatorio->id }}">
-                                        <button type="button" class="btn btn-primary">Mais</button>
+                                        <button type="button" class="btn btn-primary" style="background-color: rgb(94, 105, 255)">Mais</button>
                                     </a>
                                 <center>
                             </div>
                             <script>
-                                // Dados do reservatório
                                 var volumeAtual = {{ $reservatorio->volume_atual }};
                                 var volumeMaximo = {{ $reservatorio->volume_maximo }};
                                 var volumeLivre = volumeMaximo - volumeAtual;
 
-                                // Configuração do gráfico de pizza
                                 var ctx = document.getElementById(`{{ $reservatorio->id }}`).getContext('2d');
                                 console.log('{{ $reservatorio->id }}')
                                 new Chart(ctx, {
-                                    type: 'pie', // Tipo do gráfico
+                                    type: 'pie',
                                     data: {
-                                        labels: ['Usado', 'Livre'], // Legendas das fatias
+                                        labels: ['Usado', 'Livre'],
                                         datasets: [{
                                             data: [volumeAtual, volumeLivre], // Valores
-                                            backgroundColor: ['#3498db', '#7f8c8d'], // Cores: azul e cinza escuro
+                                            backgroundColor: ['rgba(94, 105, 255)', '#7f8c8d'],
                                         }]
                                     },
                                     options: {
@@ -77,13 +76,13 @@
                                         plugins: {
                                             title: {
                                                 display: true,
-                                                text: '{{ $reservatorio->nome }}', // Título do gráfico
+                                                text: '{{ $reservatorio->nome }}',
                                                 font: {
                                                     size: 18
                                                 }
                                             },
                                             legend: {
-                                                position: 'bottom', // Posiciona a legenda abaixo do gráfico
+                                                position: 'bottom',
                                             }
                                         }
                                     }
@@ -112,7 +111,6 @@
                         type: 'bar',
                         data: {
                             labels: [
-                                //Codigo blade para pegar os graficos do banco
                                 @foreach ($reservatorios as $reservatorio)
                                     @if (Auth::user()->id == $reservatorio->user_id)
                                         '{{ $reservatorio->nome }}',
@@ -128,6 +126,7 @@
                                         @endif
                                     @endforeach
                                 ],
+                                backgroundColor: 'rgba(94, 105, 255, 0.2)',
                                 borderWidth: 1
                             }]
                         },
@@ -207,7 +206,7 @@
                                 <br><br>
 
                                 <hr>
-                                <input type="submit" class="btn btn-primary" value="Criar">
+                                <input type="submit" class="btn btn-primary" style="background-color: rgb(94, 105, 255)" value="Criar">
                             </form>
                         </div>
                     </div>

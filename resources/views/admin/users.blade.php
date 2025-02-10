@@ -14,7 +14,7 @@
         <div class="users-box">
             <h1>Usuarios</h1>
             <hr>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Novo
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" style="background-color: rgb(94, 105, 255)">Novo
                 usuario</button><br><br>
             <div class="table-responsive">
                 <table class="table table-bordered">
@@ -74,21 +74,21 @@
                                     <div class="text-danger">{{ $errors->first('name') }}</div>
                                 @endif
                                 <br><br>
-                                
+
                                 <label for="email">Email:</label>
                                 <input type="email" name="email" id="email" class="input-text" value="{{ old('email') }}">
                                 @if ($errors->has('email'))
                                     <div class="text-danger">{{ $errors->first('email') }}</div>
                                 @endif
                                 <br><br>
-                                
+
                                 <label for="password">Senha:</label>
                                 <input type="password" name="password" id="password" class="input-text">
                                 @if ($errors->has('password'))
                                     <div class="text-danger">{{ $errors->first('password') }}</div>
                                 @endif
                                 <br><br>
-                                
+
                                 <hr>
                                 <label for="">Nivel de acesso:</label><br>
                                 <label>
@@ -101,8 +101,8 @@
                                     <div class="text-danger">{{ $errors->first('is_admin') }}</div>
                                 @endif
                                 <hr>
-                                <input type="submit" class="btn btn-primary" value="Enviar">
-                            </form>                            
+                                <input type="submit" class="btn btn-primary" style="background-color: rgb(94, 105, 255)" value="Enviar">
+                            </form>
                         </div>
                     </div>
                 </div>

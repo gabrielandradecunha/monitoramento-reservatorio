@@ -96,7 +96,7 @@
                 <p>{{ $reservatorio->descricao }}</p><br>
             @endif
 
-            <h2>Graficos e Métricas</h2>
+            <h2>Dados</h2>
             <hr>
 
             @php
@@ -184,207 +184,136 @@
 
             <br>
 
-            {{-- Importando biblioteca de graficos --}}
-            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
             <br>
             <div class="grafico-mapa-container">
 
-                    <!-- Gráfico -->
-                    <div class="div-grafico">
-                        <canvas id="graficoLinha" class="height: 100%; width: 100%;"></canvas>
-                    </div>
+                <!-- Gráfico -->
+                <div class="div-grafico">
+                    <canvas id="graficoLinha" class="height: 100%; width: 100%;"></canvas>
+                </div>
 
-                    <!-- Mapa -->
-                    <div class="div-mapa">
-                        <div id="map"></div>
-                    </div>
+                <!-- Mapa -->
+                <div class="div-mapa">
+                    <div id="map"></div>
+                </div>
             </div>
 
 
+            {{-- JavaScript --}}
             <script src="https://unpkg.com/ol@latest/dist/ol.js"></script>
+            <script src="{{ URL::asset('js/map.js') }}"></script>
+            <script>initMap({{$reservatorio->latitude}}, {{$reservatorio->longitude}});</script>
+
             <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+            <script src="{{URL::asset('js/linechart.js')}}"></script>
+            @php
+                //jsons to graphs
+                $reserv_data = array();
+                $reserv_volume = array();
+                foreach($historico_reservatorio->take(20) as $hist_reserv){
+                    $reserv_data[] = $hist_reserv->data;
+                    $reserv_volume[] = $hist_reserv->volume;
+                }
+            @endphp
             <script>
-                const data = {
-                    labels: [
-                        @foreach ($historico_reservatorio->take(20)->reverse() as $hist_reserv)
-                            '{{ $hist_reserv->data }}',
-                        @endforeach
-                    ],
-                    datasets: [{
-                        label: 'Historico de volume',
-                        data: [
-                            @foreach ($historico_reservatorio->take(20)->reverse() as $hist_reserv)
-                                {{ $hist_reserv->volume }},
-                            @endforeach
-                        ],
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                        tension: 0.1,
-                        fill: true,
-                    }]
-                };
 
-                const config = {
-                    type: 'line',
-                    data: data,
-                    options: {
-                        responsive: true,
-                        scales: {
-                            x: {
-                                beginAtZero: true
-                            },
-                            y: {
-                                beginAtZero: true
-                            }
-                        },
-                        plugins: {
-                            legend: {
-                                position: 'top',
-                            },
-                        },
-                    },
-                };
+                var reserv_data = @json($reserv_data);
+                var reserv_volume = @json($reserv_volume);
 
-                const graficoLinha = new Chart(
-                    document.getElementById('graficoLinha'),
-                    config
-                );
+                if(reserv_data != null && reserv_volume != null){
+                    console.log(reserv_data, reserv_volume);
+                    initChartLine(reserv_data, reserv_volume);
+                }
             </script>
 
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                    var map = new ol.Map({
-                        target: 'map',
-                        layers: [
-                            new ol.layer.Tile({
-                                source: new ol.source.OSM()
-                            }),
-                            new ol.layer.Tile({
-                                source: new ol.source.TileWMS({
-                                    url: 'http://localhost:8181/geoserver/ows',
-                                    serverType: 'geoserver',
-                                })
-                            })
-                        ],
-                        view: new ol.View({
-                            center: ol.proj.fromLonLat([{{ $reservatorio->latitude }}, {{ $reservatorio->longitude }}]),
-                            zoom: 16
-                        })
-                    });
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Editar reservatorio</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="/updatereservatorio/{{ $reservatorio->id }}" method="post">
+                                @csrf
+                                <label for="nome">Nome do Reservatório:</label>
+                                <input type="text" name="nome" id="nome" class="input-text"
+                                    value="{{ $reservatorio->nome }}">
+                                @if ($errors->has('nome'))
+                                    <div class="text-danger">{{ $errors->first('nome') }}</div>
+                                @endif
+                                <br><br>
 
-                    var marker = new ol.Feature({
-                        geometry: new ol.geom.Point(
-                            ol.proj.fromLonLat([{{ $reservatorio->latitude }}, {{ $reservatorio->longitude }}])
-                        )
-                    });
+                                <label for="volume_maximo">Volume Máximo (Litros):</label>
+                                <input type="number" name="volume_maximo" id="volume_maximo" class="input-text"
+                                    value="{{ $reservatorio->volume_maximo }}">
+                                @if ($errors->has('volume_maximo'))
+                                    <div class="text-danger">{{ $errors->first('volume_maximo') }}</div>
+                                @endif
+                                <br><br>
 
-                    marker.setStyle(new ol.style.Style({
-                        image: new ol.style.Circle({
-                            radius: 8,
-                            fill: new ol.style.Fill({ color: 'blue' }),
-                            stroke: new ol.style.Stroke({ color: 'white', width: 2 })
-                        })
-                    }));
+                                <label for="volume_atual">Volume Atual (Litros):</label>
+                                <input type="number" name="volume_atual" id="volume_atual" class="input-text"
+                                    value="{{ $reservatorio->volume_atual }}">
+                                @if ($errors->has('volume_atual'))
+                                    <div class="text-danger">{{ $errors->first('volume_atual') }}</div>
+                                @endif
+                                <br><br>
 
-                    var vectorLayer = new ol.layer.Vector({
-                        source: new ol.source.Vector({
-                            features: [marker]
-                        })
-                    });
+                                <label for="mac">MAC do Microcontrolador:</label>
+                                <input type="text" name="mac" id="mac" class="input-text"
+                                    value="{{ $reservatorio->mac }}" />
+                                @if ($errors->has('mac'))
+                                    <div class="text-danger">{{ $errors->first('mac') }}</div>
+                                @endif
+                                <br><br>
 
-                    map.addLayer(vectorLayer);
-                });
-        </script>
+                                <label for="latitude">Latitude:</label>
+                                <input type="text" name="latitude" id="latitude" class="input-text"
+                                    value="{{ $reservatorio->latitude }}" />
+                                @if ($errors->has('latitude'))
+                                    <div class="text-danger">{{ $errors->first('latitude') }}</div>
+                                @endif
+                                <br><br>
 
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Editar reservatorio</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="/updatereservatorio/{{ $reservatorio->id }}" method="post">
-                            @csrf
-                            <label for="nome">Nome do Reservatório:</label>
-                            <input type="text" name="nome" id="nome" class="input-text"
-                                value="{{ $reservatorio->nome }}">
-                            @if ($errors->has('nome'))
-                                <div class="text-danger">{{ $errors->first('nome') }}</div>
-                            @endif
-                            <br><br>
+                                <label for="longitude">Longitude:</label>
+                                <input type="text" name="longitude" id="longitude" class="input-text"
+                                    value="{{ $reservatorio->longitude }}" />
+                                @if ($errors->has('longitude'))
+                                    <div class="text-danger">{{ $errors->first('longitude') }}</div>
+                                @endif
+                                <br><br>
 
-                            <label for="volume_maximo">Volume Máximo (Litros):</label>
-                            <input type="number" name="volume_maximo" id="volume_maximo" class="input-text"
-                                value="{{ $reservatorio->volume_maximo }}">
-                            @if ($errors->has('volume_maximo'))
-                                <div class="text-danger">{{ $errors->first('volume_maximo') }}</div>
-                            @endif
-                            <br><br>
+                                <label for="descricao">Descrição:</label>
+                                <textarea name="descricao" id="descricao" class="input-text">{{ $reservatorio->descricao }}</textarea>
+                                @if ($errors->has('descricao'))
+                                    <div class="text-danger">{{ $errors->first('descricao') }}</div>
+                                @endif
+                                <br><br>
 
-                            <label for="volume_atual">Volume Atual (Litros):</label>
-                            <input type="number" name="volume_atual" id="volume_atual" class="input-text"
-                                value="{{ $reservatorio->volume_atual }}">
-                            @if ($errors->has('volume_atual'))
-                                <div class="text-danger">{{ $errors->first('volume_atual') }}</div>
-                            @endif
-                            <br><br>
-
-                            <label for="mac">MAC do Microcontrolador:</label>
-                            <input type="text" name="mac" id="mac" class="input-text"
-                                value="{{ $reservatorio->mac }}" />
-                            @if ($errors->has('mac'))
-                                <div class="text-danger">{{ $errors->first('mac') }}</div>
-                            @endif
-                            <br><br>
-
-                            <label for="latitude">Latitude:</label>
-                            <input type="text" name="latitude" id="latitude" class="input-text"
-                                value="{{ $reservatorio->latitude }}" />
-                            @if ($errors->has('latitude'))
-                                <div class="text-danger">{{ $errors->first('latitude') }}</div>
-                            @endif
-                            <br><br>
-
-                            <label for="longitude">Longitude:</label>
-                            <input type="text" name="longitude" id="longitude" class="input-text"
-                                value="{{ $reservatorio->longitude }}" />
-                            @if ($errors->has('longitude'))
-                                <div class="text-danger">{{ $errors->first('longitude') }}</div>
-                            @endif
-                            <br><br>
-
-                            <label for="descricao">Descrição:</label>
-                            <textarea name="descricao" id="descricao" class="input-text">{{ $reservatorio->descricao }}</textarea>
-                            @if ($errors->has('descricao'))
-                                <div class="text-danger">{{ $errors->first('descricao') }}</div>
-                            @endif
-                            <br><br>
-
-                            <hr>
-                            <input type="submit" class="btn btn-primary" value="Salvar">
-                        </form>
+                                <hr>
+                                <input type="submit" class="btn btn-primary" style="background-color: rgb(94, 105, 255)" value="Salvar">
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <br><br><br>
-        <center><a href="/gerarpdf{{ $reservatorio->id }}" style="color: white; text-decoration: none;"><button
-                    class="btn btn-danger">Gerar PDF <svg xmlns="http://www.w3.org/2000/svg" width="20"
-                        height="20" fill="currentColor" class="bi bi-file-earmark-pdf" viewBox="0 0 16 16">
-                        <path
-                            d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z" />
-                        <path
-                            d="M4.603 14.087a.8.8 0 0 1-.438-.42c-.195-.388-.13-.776.08-1.102.198-.307.526-.568.897-.787a7.7 7.7 0 0 1 1.482-.645 20 20 0 0 0 1.062-2.227 7.3 7.3 0 0 1-.43-1.295c-.086-.4-.119-.796-.046-1.136.075-.354.274-.672.65-.823.192-.077.4-.12.602-.077a.7.7 0 0 1 .477.365c.088.164.12.356.127.538.007.188-.012.396-.047.614-.084.51-.27 1.134-.52 1.794a11 11 0 0 0 .98 1.686 5.8 5.8 0 0 1 1.334.05c.364.066.734.195.96.465.12.144.193.32.2.518.007.192-.047.382-.138.563a1.04 1.04 0 0 1-.354.416.86.86 0 0 1-.51.138c-.331-.014-.654-.196-.933-.417a5.7 5.7 0 0 1-.911-.95 11.7 11.7 0 0 0-1.997.406 11.3 11.3 0 0 1-1.02 1.51c-.292.35-.609.656-.927.787a.8.8 0 0 1-.58.029m1.379-1.901q-.25.115-.459.238c-.328.194-.541.383-.647.547-.094.145-.096.25-.04.361q.016.032.026.044l.035-.012c.137-.056.355-.235.635-.572a8 8 0 0 0 .45-.606m1.64-1.33a13 13 0 0 1 1.01-.193 12 12 0 0 1-.51-.858 21 21 0 0 1-.5 1.05zm2.446.45q.226.245.435.41c.24.19.407.253.498.256a.1.1 0 0 0 .07-.015.3.3 0 0 0 .094-.125.44.44 0 0 0 .059-.2.1.1 0 0 0-.026-.063c-.052-.062-.2-.152-.518-.209a4 4 0 0 0-.612-.053zM8.078 7.8a7 7 0 0 0 .2-.828q.046-.282.038-.465a.6.6 0 0 0-.032-.198.5.5 0 0 0-.145.04c-.087.035-.158.106-.196.283-.04.192-.03.469.046.822q.036.167.09.346z" />
-                    </svg></button></a></center>
+            <br><br><br>
+            <center><a href="/gerarpdf{{ $reservatorio->id }}" style="color: white; text-decoration: none;"><button
+                        class="btn btn-danger">Gerar PDF <svg xmlns="http://www.w3.org/2000/svg" width="20"
+                            height="20" fill="currentColor" class="bi bi-file-earmark-pdf" viewBox="0 0 16 16">
+                            <path
+                                d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z" />
+                            <path
+                                d="M4.603 14.087a.8.8 0 0 1-.438-.42c-.195-.388-.13-.776.08-1.102.198-.307.526-.568.897-.787a7.7 7.7 0 0 1 1.482-.645 20 20 0 0 0 1.062-2.227 7.3 7.3 0 0 1-.43-1.295c-.086-.4-.119-.796-.046-1.136.075-.354.274-.672.65-.823.192-.077.4-.12.602-.077a.7.7 0 0 1 .477.365c.088.164.12.356.127.538.007.188-.012.396-.047.614-.084.51-.27 1.134-.52 1.794a11 11 0 0 0 .98 1.686 5.8 5.8 0 0 1 1.334.05c.364.066.734.195.96.465.12.144.193.32.2.518.007.192-.047.382-.138.563a1.04 1.04 0 0 1-.354.416.86.86 0 0 1-.51.138c-.331-.014-.654-.196-.933-.417a5.7 5.7 0 0 1-.911-.95 11.7 11.7 0 0 0-1.997.406 11.3 11.3 0 0 1-1.02 1.51c-.292.35-.609.656-.927.787a.8.8 0 0 1-.58.029m1.379-1.901q-.25.115-.459.238c-.328.194-.541.383-.647.547-.094.145-.096.25-.04.361q.016.032.026.044l.035-.012c.137-.056.355-.235.635-.572a8 8 0 0 0 .45-.606m1.64-1.33a13 13 0 0 1 1.01-.193 12 12 0 0 1-.51-.858 21 21 0 0 1-.5 1.05zm2.446.45q.226.245.435.41c.24.19.407.253.498.256a.1.1 0 0 0 .07-.015.3.3 0 0 0 .094-.125.44.44 0 0 0 .059-.2.1.1 0 0 0-.026-.063c-.052-.062-.2-.152-.518-.209a4 4 0 0 0-.612-.053zM8.078 7.8a7 7 0 0 0 .2-.828q.046-.282.038-.465a.6.6 0 0 0-.032-.198.5.5 0 0 0-.145.04c-.087.035-.158.106-.196.283-.04.192-.03.469.046.822q.036.167.09.346z" />
+                        </svg></button></a></center>
 
-    </div>
+        </div>
     </div>
 
 @endsection
