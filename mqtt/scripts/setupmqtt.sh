@@ -1,11 +1,21 @@
 #!/bin/bash
 
-# run it before up docker-compose
+# setup mosquitto and database
 
-cd ../mosquitto/config/
-touch pass
-cd ../../../
+function configFiles(){
+    cd ../mosquitto/config/
+    touch pass
+}
 
-sudo docker-compose up -d
+function setupMosquittoAndDb(){
+    cd ../../../
+    sudo docker-compose up -d
+}
 
-sudo docker exec -it mosquitto mosquitto_passwd -c /mosquitto/config/pass teste
+function createUser(){
+    sudo docker exec -it mosquitto mosquitto_passwd -c /mosquitto/config/pass teste
+}
+
+configFiles
+setupMosquittoAndDb
+createUser
