@@ -6,6 +6,7 @@ import os
 from dotenv import load_dotenv
 from database import update_db, get_mac
 from router import router
+import threading
 
 load_dotenv()
 
@@ -40,7 +41,6 @@ app.include_router(router, tags=[""])
 def root():
     return {"message": "API to connect in broker mqtt"}
 
-
 # MQTT callback's
 def on_connect(client, userdata, flags, reason_code, properties):
     print(f"MQTT broker conected with result code: {reason_code}")
@@ -61,15 +61,15 @@ def on_message(client, userdata, msg):
     update_db(data['MACAddress'], data['Nivel_agua'], data['longitude'], data['latitude'])
 
 mqttc = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
-
-# optional tls
-#mqttc.tls_set()
-
-# user and password for priate brokers
 mqttc.username_pw_set(user, password)
 mqttc.connect(str(mqtt_host), int(mqtt_port), 60)
 
 mqttc.on_connect = on_connect
 mqttc.on_message = on_message
 
-mqttc.loop_forever()
+def run_mqtt():
+    mqttc.loop_forever()
+
+mqtt_thread = threading.Thread(target=run_mqtt)
+mqtt_thread.daemon = True  
+mqtt_thread.start()

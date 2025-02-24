@@ -3,11 +3,10 @@ import os
 from dotenv import load_dotenv
 
 load_dotenv()
-app_port = os.getenv('APP_PORT', 8000)
+app_port = os.getenv('APP_PORT', 8090)
 sys.path.append(os.path.abspath(os.path.dirname(__file__)))
-
-from main import app
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=int(app_port), reload=True)
+    # Passar o aplicativo como uma string de importação
+    uvicorn.run("main:app", host="0.0.0.0", port=int(app_port), reload=True)
