@@ -66,7 +66,7 @@ mqttc = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
 #mqttc.tls_set()
 
 # user and password for priate brokers
-#mqttc.username_pw_set(user, password)
+mqttc.username_pw_set(user, password)
 mqttc.connect(str(mqtt_host), int(mqtt_port), 60)
 
 mqttc.on_connect = on_connect
