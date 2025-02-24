@@ -174,16 +174,15 @@ h5 {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
-/* Ajustes para telas menores */
 @media (max-width: 768px) {
     .div-grafico,
     .div-mapa {
-        width: 450px; /* Reduz o tamanho das divs em telas menores */
+        width: 450px; 
         height: 150px;
     }
 
     .grafico-mapa-container {
-        gap: 5px; /* Reduz o espaço entre as divs */
+        gap: 5px; 
     }
 }
 
