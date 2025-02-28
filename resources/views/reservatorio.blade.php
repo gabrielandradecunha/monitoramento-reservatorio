@@ -40,7 +40,7 @@
                             fetch("http://localhost:8090/ligarmotor", { method: 'POST' })
                                 .then(response => response.json())
                                 .then(data => {
-                                    alert(data.message); 
+                                    alert("Publicado em: "+data.message); 
                                 });
                         });
                     </script>
