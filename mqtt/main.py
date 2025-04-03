@@ -29,7 +29,7 @@ origins = [
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"], # aceita todas as origens para testes
+    allow_origins=["http://127.0.0.1:8000"], # porta da aplicação php
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -60,16 +60,19 @@ def on_message(client, userdata, msg):
 
     update_db(data['MACAddress'], data['Nivel_agua'], data['longitude'], data['latitude'])
 
-mqttc = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
-mqttc.username_pw_set(user, password)
-mqttc.connect(str(mqtt_host), int(mqtt_port), 60)
+client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
+client.username_pw_set(user, password)
+client.connect(str(mqtt_host), int(mqtt_port), 60)
 
-mqttc.on_connect = on_connect
-mqttc.on_message = on_message
+# tls opcional
+client.tls_set()
+
+client.on_connect = on_connect
+client.on_message = on_message
 
 def run_mqtt():
-    mqttc.loop_forever()
+    client.loop_forever()
 
 mqtt_thread = threading.Thread(target=run_mqtt)
-mqtt_thread.daemon = True  
+mqtt_thread.daemon = True
 mqtt_thread.start()

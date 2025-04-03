@@ -13,6 +13,10 @@ mqtt_topic = os.getenv('MOSQUITTO_TOPIC')
 
 client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
 client.username_pw_set(mqtt_user, mqtt_password)
+
+# tls opcional
+client.tls_set()
+
 client.connect(mqtt_host, mqtt_port, 60)
 
 router = APIRouter()
