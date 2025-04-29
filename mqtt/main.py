@@ -56,16 +56,17 @@ def on_message(client, userdata, msg):
     json_string = msg.payload
     data = json.loads(json_string)
 
-    print(f"mac: {data['MACAddress']}, volume: {data['Nivel_agua']}, longitude: {data['longitude']}, latitude: {data['latitude']}")
+    #print(f"mac: {data['MACAddress']}, volume: {data['Nivel_agua']}, longitude: {data['longitude']}, latitude: {data['latitude']}")
 
     update_db(data['MACAddress'], data['Nivel_agua'], data['longitude'], data['latitude'])
 
 client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
-client.username_pw_set(user, password)
+# caso nao usar broker publico
+#client.username_pw_set(user, password)
 client.connect(str(mqtt_host), int(mqtt_port), 60)
 
 # tls opcional
-client.tls_set()
+#client.tls_set()
 
 client.on_connect = on_connect
 client.on_message = on_message

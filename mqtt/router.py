@@ -12,17 +12,17 @@ mqtt_password = os.getenv('MOSQUITTO_PASSWORD')
 mqtt_topic = os.getenv('MOSQUITTO_TOPIC')
 
 client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
-client.username_pw_set(mqtt_user, mqtt_password)
+#client.username_pw_set(mqtt_user, mqtt_password)
 
 # tls opcional
-client.tls_set()
+#client.tls_set()
 
 client.connect(mqtt_host, mqtt_port, 60)
 
 router = APIRouter()
 
 def ligarmotor(topic: str):
-    value = '{"motor":"on"}'
+    value = '{"motor": 1}'
     client.publish(topic, value)
     print(f"Publicado no tópico {topic}: {value}")
 
