@@ -6,6 +6,7 @@ import os
 from dotenv import load_dotenv
 from database import update_db, get_mac
 from router import router
+from datetime import datetime
 import threading
 
 load_dotenv()
@@ -56,9 +57,15 @@ def on_message(client, userdata, msg):
     json_string = msg.payload
     data = json.loads(json_string)
 
-    #print(f"mac: {data['MACAddress']}, volume: {data['Nivel_agua']}, longitude: {data['longitude']}, latitude: {data['latitude']}")
+    # valor do hidrometro mudar no codigo
+    litros = 10
 
-    update_db(data['MACAddress'], data['Nivel_agua'], data['longitude'], data['latitude'])
+    date_time = datetime.utcfromtimestamp(data['mem']['epoch'])
+
+    print(f"devid: {data['devid']}, volume: {int(data['mem']['in1_cnt_pulses'])*litros}, umidade {int(data['mem']['var0'])/10}, temperatura: {int(data['mem']['var1'])/10}, timestamp: {date_time.strftime("%Y-%m-%d %H:%M:%S")}")
+
+    update_db(str(data['devid']), int(data['mem']['in1_cnt_pulses']*litros), '0', '0')
+    #data['longitude'], data['latitude']
 
 client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
 # caso nao usar broker publico
