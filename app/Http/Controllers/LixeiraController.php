@@ -21,9 +21,12 @@ class LixeiraController extends Controller
             $reservatorio->volume_atual = $lixeira->volume_atual;
             $reservatorio->user_id = $lixeira->user_id;
             $reservatorio->descricao = $lixeira->descricao;
+            $reservatorio->umidade = $lixeira->umidade;
+            $reservatorio->temperatura = $lixeira->temperatura;
+            $reservatorio->profundidade = $lixeira->profundidade;
             $reservatorio->mac = $lixeira->mac;
-            $reservatorio->longitude = $lixeira->longitude;
-            $reservatorio->latitude = $lixeira->latitude;
+            //$reservatorio->longitude = $lixeira->longitude;
+            //$reservatorio->latitude = $lixeira->latitude;
             $reservatorio->ultima_atualizacao = $lixeira->ultima_atualizacao;
             $reservatorio->save();
 

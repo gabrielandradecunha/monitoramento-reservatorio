@@ -62,7 +62,14 @@ def on_message(client, userdata, msg):
 
     date_time = datetime.utcfromtimestamp(data['mem']['epoch'])
 
-    print(f"devid: {data['devid']}, volume: {int(data['mem']['in1_cnt_pulses'])*litros}, umidade {int(data['mem']['var0'])/10}, temperatura: {int(data['mem']['var1'])/10}, timestamp: {date_time.strftime("%Y-%m-%d %H:%M:%S")}")
+    print(
+        f"devid: {data['devid']}, "
+        f"volume: {int(data['mem']['in1_cnt_pulses']) * litros}, "
+        f"umidade: {int(data['mem']['var0']) / 10}, "
+        f"temperatura: {int(data['mem']['var1']) / 10}, "
+        f"timestamp: {date_time.strftime('%Y-%m-%d %H:%M:%S')}"
+    )
+
 
     update_db(str(data['devid']), int(data['mem']['in1_cnt_pulses']*litros), '0', '0')
     #data['longitude'], data['latitude']

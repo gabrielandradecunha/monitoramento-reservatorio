@@ -13,7 +13,7 @@ function initChartLine(reserv_data, reserv_vol) {
     };
 
     const config = {
-        type: 'line',
+        type: 'bar',
         data: data,
         options: {
             responsive: true,

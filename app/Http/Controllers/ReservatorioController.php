@@ -35,8 +35,8 @@ class ReservatorioController extends Controller
             $reservatorio->volume_atual = $request->volume_atual;
             $reservatorio->descricao = $request->descricao;
             $reservatorio->mac = $request->mac;
-            $reservatorio->longitude = $request->longitude;
-            $reservatorio->latitude = $request->latitude;
+            //$reservatorio->longitude = $request->longitude;
+            //$reservatorio->latitude = $request->latitude;
             $reservatorio->ultima_atualizacao = Carbon::now();
             $reservatorio->save();
 
@@ -59,8 +59,11 @@ class ReservatorioController extends Controller
             $lixeira->user_id = $reservatorio->user_id;
             $lixeira->descricao = $reservatorio->descricao;
             $lixeira->mac = $reservatorio->mac;
-            $lixeira->longitude = $reservatorio->longitude;
-            $lixeira->latitude = $reservatorio->latitude;
+            //$lixeira->longitude = $reservatorio->longitude;
+            //$lixeira->latitude = $reservatorio->latitude;
+            $lixeira->umidade = $reservatorio->umidade;
+            $lixeira->temperatura = $reservatorio->temperatura;
+            $lixeira->profundiade = $reservatorio->profundidade;
             $lixeira->ultima_atualizacao = $reservatorio->ultima_atualizacao;
             $lixeira->save();
 

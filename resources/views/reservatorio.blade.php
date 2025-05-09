@@ -177,30 +177,17 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th scope="col">Vazão
-                                <i style="color: red"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25"
-                                        fill="currentColor" class="bi bi-arrow-down-circle-fill" viewBox="0 0 16 16">
-                                        <path
-                                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293z" />
-                                    </svg></i>
-                            </th>
-                            <th scope="col">Retenção <i style="color: green"><svg xmlns="http://www.w3.org/2000/svg"
-                                        width="25" height="25" fill="currentColor" class="bi bi-arrow-up-circle-fill"
-                                        viewBox="0 0 16 16">
-                                        <path
-                                            d="M16 8A8 8 0 1 0 0 8a8 8 0 0 0 16 0m-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707z" />
-                                    </svg></i></th>
-                            <th scope="col">Velocidade da Vazão</th>
-                            <th scope="col">Velocidade da Retenção</th>
+                            <th scope="col">Umidade</th>
+                            <th scope="col">Temperatura</th>
+                            <th scope="col">Profundidade</th>
                             <th scope="col">Taxa de atualização</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>{{ number_format($vazao, 2, ',', '.') }}</td>
-                            <td>{{ number_format($retencao, 2, ',', '.') }}</td>
-                            <td>{{ number_format($velocidade_vazao, 2, ',', '.') }} l/h</td>
-                            <td>{{ number_format($velocidade_retencao, 2, ',', '.') }} l/h</td>
+                            <td>{{ number_format($reservatorio->umidade, 2, ',', '.') }}</td>
+                            <td>{{ number_format($reservatorio->temperatura, 2, ',', '.') }}</td>
+                            <td>{{ number_format($reservatorio->profundidade, 2, ',', '.') }} </td>
                             @php
                                 $tempo_atualizacao = 'N/A';
 
@@ -237,22 +224,10 @@
                     <canvas id="graficoLinha" class="height: 100%; width: 100%;"></canvas>
                 </div>
 
-                <!-- Mapa -->
-                <div class="div-mapa">
-                    <div id="map"></div>
-                </div>
-            </div>
-
 
             {{-- JavaScript --}}
-            <script src="https://unpkg.com/ol@latest/dist/ol.js"></script>
-            <script src="{{ URL::asset('js/map.js') }}"></script>
-            <script>
-                initMap({{ $reservatorio->latitude }}, {{ $reservatorio->longitude }});
-            </script>
 
             <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
             <script src="{{ URL::asset('js/linechart.js') }}"></script>
             @php
                 //jsons to graphs
@@ -295,7 +270,7 @@
                                 @endif
                                 <br><br>
 
-                                <label for="volume_maximo">Volume Máximo (Litros):</label>
+                                <label for="volume_maximo">Volume Máximo:</label>
                                 <input type="number" name="volume_maximo" id="volume_maximo" class="input-text"
                                     value="{{ $reservatorio->volume_maximo }}">
                                 @if ($errors->has('volume_maximo'))
@@ -303,7 +278,7 @@
                                 @endif
                                 <br><br>
 
-                                <label for="volume_atual">Volume Atual (Litros):</label>
+                                <label for="volume_atual">Volume Atual:</label>
                                 <input type="number" name="volume_atual" id="volume_atual" class="input-text"
                                     value="{{ $reservatorio->volume_atual }}">
                                 @if ($errors->has('volume_atual'))
@@ -316,22 +291,6 @@
                                     value="{{ $reservatorio->mac }}" />
                                 @if ($errors->has('mac'))
                                     <div class="text-danger">{{ $errors->first('mac') }}</div>
-                                @endif
-                                <br><br>
-
-                                <label for="latitude">Latitude:</label>
-                                <input type="text" name="latitude" id="latitude" class="input-text"
-                                    value="{{ $reservatorio->latitude }}" />
-                                @if ($errors->has('latitude'))
-                                    <div class="text-danger">{{ $errors->first('latitude') }}</div>
-                                @endif
-                                <br><br>
-
-                                <label for="longitude">Longitude:</label>
-                                <input type="text" name="longitude" id="longitude" class="input-text"
-                                    value="{{ $reservatorio->longitude }}" />
-                                @if ($errors->has('longitude'))
-                                    <div class="text-danger">{{ $errors->first('longitude') }}</div>
                                 @endif
                                 <br><br>
 

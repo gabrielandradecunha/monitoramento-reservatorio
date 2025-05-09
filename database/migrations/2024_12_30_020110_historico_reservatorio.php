@@ -19,8 +19,11 @@ return new class extends Migration
             após a entidade ser deletada diretamente na lixeira */
             $table->unsignedBigInteger('reservatorio_id');
             $table->decimal('volume', 15, 2);
-            $table->text('latitude')->nullable();
-            $table->text('longitude')->nullable();
+            //$table->text('latitude')->nullable();
+            //$table->text('longitude')->nullable();
+            $table->decimal('temperatura')->nullable();
+            $table->decimal('umidade')->nullable();
+            $table->decimal('profundidade')->nullable();
             $table->timestamp('data')->useCurrent();
             $table->timestamps();
         });

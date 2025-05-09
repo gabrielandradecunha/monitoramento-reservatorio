@@ -161,14 +161,14 @@
                                 @endif
                                 <br><br>
 
-                                <label for="volume_maximo">Volume Máximo (Litros):</label>
+                                <label for="volume_maximo">Volume Máximo:</label>
                                 <input type="number" name="volume_maximo" id="volume_maximo" class="input-text">
                                 @if ($errors->has('volume_maximo'))
                                     <div class="text-danger">{{ $errors->first('volume_maximo') }}</div>
                                 @endif
                                 <br><br>
 
-                                <label for="volume_atual">Volume Atual (Litros):</label>
+                                <label for="volume_atual">Volume Atual:</label>
                                 <input type="number" name="volume_atual" id="volume_atual" class="input-text">
                                 @if ($errors->has('volume_atual'))
                                     <div class="text-danger">{{ $errors->first('volume_atual') }}</div>
@@ -177,22 +177,6 @@
 
                                 <label for="mac">MAC do Microcontrolador:</label>
                                 <input type="text" name="mac" id="mac" class="input-text"/>
-                                @if ($errors->has('mac'))
-                                    <div class="text-danger">{{ $errors->first('mac') }}</div>
-                                @endif
-                                <br><br>
-
-                                <label for="latitude">Latitude:</label>
-                                <input type="text" name="latitude" id="latitude" class="input-text"
-                                    value=""/>
-                                @if ($errors->has('mac'))
-                                    <div class="text-danger">{{ $errors->first('mac') }}</div>
-                                @endif
-                                <br><br>
-
-                                <label for="longitude">Longitude:</label>
-                                <input type="text" name="longitude" id="longitude" class="input-text"
-                                    value=""/>
                                 @if ($errors->has('mac'))
                                     <div class="text-danger">{{ $errors->first('mac') }}</div>
                                 @endif

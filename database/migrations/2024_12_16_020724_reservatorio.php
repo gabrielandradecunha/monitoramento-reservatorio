@@ -19,8 +19,11 @@ return new class extends Migration
             $table->timestamp('ultima_atualizacao');
             $table->text('descricao')->nullable();
             $table->text('mac')->nullable();
-            $table->text('latitude')->nullable();
-            $table->text('longitude')->nullable();
+            $table->decimal('temperatura')->nullable();
+            $table->decimal('umidade')->nullable();
+            $table->decimal('profundidade')->nullable();
+            //$table->text('latitude')->nullable();
+            //$table->text('longitude')->nullable();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
 
             $table->timestamps();

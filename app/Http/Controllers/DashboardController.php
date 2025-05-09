@@ -30,8 +30,8 @@ class DashboardController extends Controller
             $reservatorio->user_id = $request->id;
             $reservatorio->mac = $request->mac;
             $reservatorio->descricao = $request->descricao;
-            $reservatorio->longitude = $request->longitude;
-            $reservatorio->latitude = $request->latitude;
+            //$reservatorio->longitude = $request->longitude;
+            //$reservatorio->latitude = $request->latitude;
             $reservatorio->ultima_atualizacao = Carbon::now();
             $reservatorio->save();
 
