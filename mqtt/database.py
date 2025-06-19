@@ -35,7 +35,7 @@ def get_mac():
         if connection:
             connection.close()
 
-def update_db(mac_adress, new_vol, new_lat, new_long):
+def update_db(mac_adress, new_vol, umidade, temperatura, profundidade):
     dbname = os.getenv('DB_NAME')
     db_user = os.getenv('DB_USER')
     password = os.getenv('DB_PASSWORD')
@@ -52,10 +52,10 @@ def update_db(mac_adress, new_vol, new_lat, new_long):
         return
 
     cursor = connection.cursor()
-    query = "UPDATE reservatorios SET volume_atual=%s, latitude=%s, longitude=%s WHERE mac=%s"
+    query = "UPDATE reservatorios SET volume_atual=%s, umidade=%s, profundidade=%s, temperatura=%s WHERE mac=%s"
 
     try:
-        cursor.execute(query, (new_vol, new_lat, new_long, mac_adress))
+        cursor.execute(query, (new_vol, umidade, profundidade, temperatura, mac_adress))
         connection.commit()
         if cursor.rowcount > 0:
             print(f"Volume atualizado com sucesso para o reservatório com o mac {mac_adress}. Novo volume: {new_vol}")

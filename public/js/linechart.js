@@ -3,7 +3,7 @@ function initChartLine(reserv_data, reserv_vol) {
     const data = {
         labels: reserv_data,
         datasets: [{
-            label: 'Histórico de volume',
+            label: 'Hidrometro',
             data: reserv_vol,
             borderColor: 'rgba(94, 105, 255, 0.2)',
             backgroundColor: 'rgba(94, 105, 255, 0.2)',

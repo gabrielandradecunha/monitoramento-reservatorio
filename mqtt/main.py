@@ -57,22 +57,39 @@ def on_message(client, userdata, msg):
     json_string = msg.payload
     data = json.loads(json_string)
 
-    # valor do hidrometro mudar no codigo
-    litros = 10
+    # Processa somente se a chave 'data' estiver presente
+    if 'data' not in data:
+        print("Mensagem ignorada: não contém campo 'data'.")
+        return
 
-    date_time = datetime.utcfromtimestamp(data['mem']['epoch'])
+    # Valor do hidrometro (ajustável)
+    litros = 1000
 
-    print(
-        f"devid: {data['devid']}, "
-        f"volume: {int(data['mem']['in1_cnt_pulses']) * litros}, "
-        f"umidade: {int(data['mem']['var0']) / 10}, "
-        f"temperatura: {int(data['mem']['var1']) / 10}, "
-        f"timestamp: {date_time.strftime('%Y-%m-%d %H:%M:%S')}"
-    )
+    try:
+        date_time = datetime.utcfromtimestamp(data['data']['epoch'])
 
+        print(
+            f"devid: {data['devid']}, "
+            f"volume: {int(data['data']['in1_cnt_pulses']) * litros}, "
+            f"umidade: {int(data['data']['var0']) / 10}, "
+            f"temperatura: {int(data['data']['var1']) / 10}, "
+            f"profundiade: {int(100 - (data['data']['adc'] / 100))}m",
+            f"timestamp: {date_time.strftime('%Y-%m-%d %H:%M:%S')}"
+        )
 
-    update_db(str(data['devid']), int(data['mem']['in1_cnt_pulses']*litros), '0', '0')
-    #data['longitude'], data['latitude']
+        update_db(
+            str(data['devid']),
+            int(data['data']['in1_cnt_pulses']) * litros,
+            int(data['data']['var0']) / 10,
+            int(data['data']['var1']) / 10,
+            int(data['data']['adc'])
+        )
+
+    except KeyError as e:
+        print(f"Campo esperado não encontrado: {e}")
+    except Exception as e:
+        print(f"Erro ao processar mensagem: {e}")
+
 
 client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
 # caso nao usar broker publico

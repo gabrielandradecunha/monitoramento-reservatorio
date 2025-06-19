@@ -7,7 +7,7 @@ function initMap(latitude, longitude){
             }),
             new ol.layer.Tile({
                 source: new ol.source.TileWMS({
-                    url: 'http://localhost:8181/geoserver/ows',
+                    url: 'http://127.0.0.1:8181/geoserver/ows',
                     serverType: 'geoserver',
                 })
             })
